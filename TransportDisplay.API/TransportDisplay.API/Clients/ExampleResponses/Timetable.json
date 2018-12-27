@@ -1,0 +1,69 @@
+{
+    "data": {
+      "stop": {
+        "name": "Matinkylä",
+        "stoptimesWithoutPatterns": [
+          {
+            "scheduledArrival": 75540,
+            "realtimeArrival": 75540,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 75540,
+            "realtimeDeparture": 75540,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1545861600,
+            "headsign": "Vuosaari"
+          },
+          {
+            "scheduledArrival": 76140,
+            "realtimeArrival": 76140,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 76140,
+            "realtimeDeparture": 76140,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1545861600,
+            "headsign": "Vuosaari"
+          },
+          {
+            "scheduledArrival": 76740,
+            "realtimeArrival": 76740,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 76740,
+            "realtimeDeparture": 76740,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1545861600,
+            "headsign": "Vuosaari"
+          },
+          {
+            "scheduledArrival": 77340,
+            "realtimeArrival": 77340,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 77340,
+            "realtimeDeparture": 77340,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1545861600,
+            "headsign": "Vuosaari"
+          },
+          {
+            "scheduledArrival": 77940,
+            "realtimeArrival": 77940,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 77940,
+            "realtimeDeparture": 77940,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1545861600,
+            "headsign": "Vuosaari"
+          }
+        ]
+      }
+    }
+  }

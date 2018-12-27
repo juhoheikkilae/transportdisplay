@@ -10,6 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TransportDisplay.API.Services;
+using TransportDisplay.API.Clients;
+using TransportDisplay.API.Settings;
+using System.Net.Http;
 
 namespace TransportDisplay.API
 {
@@ -26,6 +30,16 @@ namespace TransportDisplay.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IArrivalEstimateService, ArrivalEstimateService>();
+            services.AddSingleton<IArrivalEstimateClient, ArrivalEstimateClient>();
+
+            // Use HSL graph API to fetch timetable information
+            services.AddSingleton<ITimetableClient>(
+                s => new HSLTimetableClient(
+                    new HttpClient
+                    {
+                        BaseAddress = new Uri(Constants.TransportApiBaseUri)
+                    }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
