@@ -36,11 +36,7 @@ namespace TransportDisplay.API
 
             // Use HSL graph API to fetch timetable information
             services.AddSingleton<ITimetableClient>(
-                s => new HslTimetableClient(
-                    new HttpClient
-                    {
-                        BaseAddress = new Uri(Constants.TransportApiBaseUri)
-                    }));
+                s => new HslTimetableClient(new HttpClient()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

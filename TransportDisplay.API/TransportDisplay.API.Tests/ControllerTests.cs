@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 using Moq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Core;
 using TransportDisplay.API.Controllers;
 using TransportDisplay.API.Services;
@@ -31,7 +32,7 @@ namespace TransportDisplay.API.Tests
 
             var output = await timetableController.GetAsync(mockStop);
 
-            Assert.IsType<TimetableModel.Timetable>(output);
+            Assert.IsType<ActionResult<TimetableModel.Timetable>>(output);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace TransportDisplay.API.Clients.Responses
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    public partial class Response
+    public partial class HslTimetableQueryResponse
     {
         [JsonProperty("data")]
         public Data Data { get; set; }
@@ -61,16 +61,25 @@ namespace TransportDisplay.API.Clients.Responses
 
         [JsonProperty("headsign")]
         public string Headsign { get; set; }
+
+        [JsonProperty("trip")]
+        public Trip Trip { get; set; }
     }
 
-    public partial class Response
+    public partial class Trip
     {
-        public static Response FromJson(string json) => JsonConvert.DeserializeObject<Response>(json, TransportDisplay.API.Clients.Responses.Converter.Settings);
+        [JsonProperty("routeShortName")]
+        public string RouteShortName { get; set; }
+    }
+
+    public partial class HslTimetableQueryResponse
+    {
+        public static HslTimetableQueryResponse FromJson(string json) => JsonConvert.DeserializeObject<HslTimetableQueryResponse>(json, TransportDisplay.API.Clients.Responses.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this Response self) => JsonConvert.SerializeObject(self, TransportDisplay.API.Clients.Responses.Converter.Settings);
+        public static string ToJson(this HslTimetableQueryResponse self) => JsonConvert.SerializeObject(self, TransportDisplay.API.Clients.Responses.Converter.Settings);
     }
 
     internal static class Converter

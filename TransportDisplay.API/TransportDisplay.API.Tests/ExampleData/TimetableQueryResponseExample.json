@@ -1,0 +1,84 @@
+{
+    "data": {
+        "stop": {
+            "name": "Matinkylä",
+            "stoptimesWithoutPatterns": [
+                {
+                    "scheduledArrival": 58020,
+                    "realtimeArrival": 58020,
+                    "arrivalDelay": 0,
+                    "scheduledDeparture": 58020,
+                    "realtimeDeparture": 58020,
+                    "departureDelay": 0,
+                    "realtime": false,
+                    "realtimeState": "SCHEDULED",
+                    "serviceDay": 1545948000,
+                    "headsign": "Vuosaari",
+                    "trip": {
+                        "routeShortName": "M1"
+                    }
+                },
+                {
+                    "scheduledArrival": 58320,
+                    "realtimeArrival": 58320,
+                    "arrivalDelay": 0,
+                    "scheduledDeparture": 58320,
+                    "realtimeDeparture": 58320,
+                    "departureDelay": 0,
+                    "realtime": false,
+                    "realtimeState": "SCHEDULED",
+                    "serviceDay": 1545948000,
+                    "headsign": "Vuosaari",
+                    "trip": {
+                        "routeShortName": "M1"
+                    }
+                },
+                {
+                    "scheduledArrival": 58620,
+                    "realtimeArrival": 58620,
+                    "arrivalDelay": 0,
+                    "scheduledDeparture": 58620,
+                    "realtimeDeparture": 58620,
+                    "departureDelay": 0,
+                    "realtime": false,
+                    "realtimeState": "SCHEDULED",
+                    "serviceDay": 1545948000,
+                    "headsign": "Vuosaari",
+                    "trip": {
+                        "routeShortName": "M1"
+                    }
+                },
+                {
+                    "scheduledArrival": 58920,
+                    "realtimeArrival": 58920,
+                    "arrivalDelay": 0,
+                    "scheduledDeparture": 58920,
+                    "realtimeDeparture": 58920,
+                    "departureDelay": 0,
+                    "realtime": false,
+                    "realtimeState": "SCHEDULED",
+                    "serviceDay": 1545948000,
+                    "headsign": "Vuosaari",
+                    "trip": {
+                        "routeShortName": "M1"
+                    }
+                },
+                {
+                    "scheduledArrival": 59220,
+                    "realtimeArrival": 59220,
+                    "arrivalDelay": 0,
+                    "scheduledDeparture": 59220,
+                    "realtimeDeparture": 59220,
+                    "departureDelay": 0,
+                    "realtime": false,
+                    "realtimeState": "SCHEDULED",
+                    "serviceDay": 1545948000,
+                    "headsign": "Vuosaari",
+                    "trip": {
+                        "routeShortName": "M1"
+                    }
+                }
+            ]
+        }
+    }
+}

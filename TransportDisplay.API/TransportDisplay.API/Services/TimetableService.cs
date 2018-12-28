@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using TransportDisplay.API.Clients;
 using TransportDisplay.API.Models;
@@ -24,7 +25,10 @@ namespace TransportDisplay.API.Services
 
         public async Task<Timetable> FetchTimetableAsync(string stop)
         {
-            throw new NotImplementedException();
+            using (CancellationTokenSource cts = new CancellationTokenSource())
+            { 
+                return await _timetableClient.GetTimetableAsync(stop, cts.Token);
+            }
         }
     }
 }
