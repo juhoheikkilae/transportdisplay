@@ -30,12 +30,13 @@ namespace TransportDisplay.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton<IArrivalEstimateService, ArrivalEstimateService>();
             services.AddSingleton<IArrivalEstimateClient, ArrivalEstimateClient>();
+            services.AddSingleton<ITimetableClient, HslTimetableClient>();
+            services.AddSingleton<ITimetableService, TimetableService>();
 
             // Use HSL graph API to fetch timetable information
             services.AddSingleton<ITimetableClient>(
-                s => new HSLTimetableClient(
+                s => new HslTimetableClient(
                     new HttpClient
                     {
                         BaseAddress = new Uri(Constants.TransportApiBaseUri)

@@ -1,15 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using static TransportDisplay.API.Models.TransportTimetableModel;
+using static TransportDisplay.API.Models.TimetableModel;
 
 namespace TransportDisplay.API.Services
 {
-    public interface IArrivalEstimateService
-    {
-    }
-
     public interface ITimetableService
     {
-        Task<Timetable> FetchTimetable(string stop);
+        Task<Timetable> FetchTimetableAsync(string stop);
+        Task<ArrivalEstimate> FetchArrivalEstimatesAsync(string stop);
     }
 }

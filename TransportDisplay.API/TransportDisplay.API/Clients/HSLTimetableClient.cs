@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace TransportDisplay.API.Clients
 {
-    public class HSLTimetableClient : ITimetableClient
+    public class HslTimetableClient : ITimetableClient
     {
         private readonly HttpClient _httpClient;
 
-        public HSLTimetableClient(HttpClient httpClient) {
+        public HslTimetableClient(HttpClient httpClient) {
             _httpClient = httpClient;
         }
 
-        public Task<TransportTimetableModel.Timetable> GetTimetable(string stop)
+        public Task<TimetableModel.Timetable> GetTimetableAsync(string stop)
         {
-            string query = "";
+            // string query = "";
             throw new NotImplementedException();
         }
     }

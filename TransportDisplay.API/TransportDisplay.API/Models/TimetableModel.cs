@@ -2,7 +2,7 @@ using System;
 
 namespace TransportDisplay.API.Models
 {
-    public class TransportTimetableModel
+    public class TimetableModel
     {
         public class Timetable
         {

@@ -1,14 +1,29 @@
 using System;
 using System.Threading.Tasks;
 using TransportDisplay.API.Clients;
-using static TransportDisplay.API.Models.TransportTimetableModel;
+using TransportDisplay.API.Models;
+using static TransportDisplay.API.Models.TimetableModel;
 
 namespace TransportDisplay.API.Services
 {
-    public class TimetableService
+    public class TimetableService : ITimetableService
     {
         private readonly ITimetableClient _timetableClient;
-        async Task<Timetable> FetchTimetable(string stop) {
+        private readonly IArrivalEstimateClient _arrivalEstimateClient;
+
+        public TimetableService(ITimetableClient timetableClient, IArrivalEstimateClient arrivalEstimateClient)
+        {
+            _timetableClient = timetableClient;
+            _arrivalEstimateClient = arrivalEstimateClient;
+        }
+
+        public async Task<ArrivalEstimate> FetchArrivalEstimatesAsync(string stop)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Timetable> FetchTimetableAsync(string stop)
+        {
             throw new NotImplementedException();
         }
     }
