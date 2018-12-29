@@ -18,17 +18,14 @@ namespace TransportDisplay.API.Services
             _arrivalEstimateClient = arrivalEstimateClient;
         }
 
-        public async Task<ArrivalEstimate> FetchArrivalEstimatesAsync(string stop)
+        public async Task<ArrivalEstimate> FetchArrivalEstimatesAsync(string stop, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Timetable> FetchTimetableAsync(string stop)
+        public async Task<Timetable> FetchTimetableAsync(string stop, CancellationToken cancellationToken)
         {
-            using (CancellationTokenSource cts = new CancellationTokenSource())
-            { 
-                return await _timetableClient.GetTimetableAsync(stop, cts.Token);
-            }
+                return await _timetableClient.GetTimetableAsync(stop, cancellationToken);
         }
     }
 }

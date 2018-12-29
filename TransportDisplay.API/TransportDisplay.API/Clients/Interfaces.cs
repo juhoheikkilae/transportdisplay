@@ -1,12 +1,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using static TransportDisplay.API.Models.TimetableModel;
+using TransportDisplay.API.Models;
 
 namespace TransportDisplay.API.Clients
 {
     public interface ITimetableClient {
-        Task<Timetable> GetTimetableAsync(string stop, CancellationToken cancellationToken);
+        Task<TimetableModel.Timetable> GetTimetableAsync(string stop, CancellationToken cancellationToken);
     }
 
     public interface IArrivalEstimateClient

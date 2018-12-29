@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Moq;
@@ -26,11 +27,11 @@ namespace TransportDisplay.API.Tests
         public async Task ShouldReturnTimetable()
         {
             var timetableService = new Mock<ITimetableService>();
-            timetableService.Setup(s => s.FetchTimetableAsync(mockStop)).ReturnsAsync(_mockTimetable);
+            timetableService.Setup(_ => _.FetchTimetableAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(_mockTimetable);
 
-            var timetableController = new TimetableController(timetableService.Object);
+            var timetableController = new TimetableController(timetableService.Object, new Logger.DebugLogger());
 
-            var output = await timetableController.GetAsync(mockStop);
+            var output = await timetableController.GetAsync(mockStop, CancellationToken.None);
 
             Assert.IsType<ActionResult<TimetableModel.Timetable>>(output);
         }

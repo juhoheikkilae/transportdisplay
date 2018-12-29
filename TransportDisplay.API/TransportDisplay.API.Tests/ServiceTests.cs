@@ -25,21 +25,18 @@ namespace TransportDisplay.API.Tests
         [Fact]
         public async Task ShouldReturnTimetable()
         {
-            using (var cts = new CancellationTokenSource())
-            {
-                var timetableClient = new Mock<ITimetableClient>();
-                var arrivalEstimateClient = new Mock<IArrivalEstimateClient>();
-                timetableClient.Setup(s => s.GetTimetableAsync(mockStop, cts.Token))
-                    .ReturnsAsync(_mockTimetable);
+            var timetableClient = new Mock<ITimetableClient>();
+            var arrivalEstimateClient = new Mock<IArrivalEstimateClient>();
+            timetableClient.Setup(s => s.GetTimetableAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(_mockTimetable);
 
-                var timetableService = new TimetableService(
-                    timetableClient.Object,
-                    arrivalEstimateClient.Object);
+            var timetableService = new TimetableService(
+                timetableClient.Object,
+                arrivalEstimateClient.Object);
 
-                var output = await timetableService.FetchTimetableAsync(mockStop);
+            var output = await timetableService.FetchTimetableAsync(mockStop, CancellationToken.None);
 
-                Assert.IsType<TimetableModel.Timetable>(output);
-            }
+            Assert.IsType<TimetableModel.Timetable>(output);
         }
     }
 }

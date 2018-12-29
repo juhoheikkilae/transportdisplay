@@ -7,7 +7,7 @@ namespace TransportDisplay.API.Services
 {
     public interface ITimetableService
     {
-        Task<Timetable> FetchTimetableAsync(string stop);
-        Task<ArrivalEstimate> FetchArrivalEstimatesAsync(string stop);
+        Task<Timetable> FetchTimetableAsync(string stop, CancellationToken cancellationToken);
+        Task<ArrivalEstimate> FetchArrivalEstimatesAsync(string stop, CancellationToken cancellationToken);
     }
 }

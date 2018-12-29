@@ -22,7 +22,7 @@ namespace TransportDisplay.API.Helpers
 
                 var resp = await httpClient.SendAsync(
                     request,
-                    HttpCompletionOption.ResponseContentRead,
+                    HttpCompletionOption.ResponseHeadersRead,
                     cancellationToken
                 );
                 
