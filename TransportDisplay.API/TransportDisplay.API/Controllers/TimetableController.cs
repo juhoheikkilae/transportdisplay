@@ -23,12 +23,13 @@ namespace TransportDisplay.API.Controllers
             _logger = logger;
         }
 
-        // GET api/timetable/{stopId}
+        // GET api/timetable?stop={stopId}
         [HttpGet]
-        public async Task<ActionResult<TimetableModel.Timetable>> GetAsync(string stop, CancellationToken cancellationToken)
+        public async Task<ActionResult<TimetableModel.Timetable>> GetAsync(string id, CancellationToken cancellationToken)
         {
-            await _logger.Log($"Fetcing timetable for stop {stop}.");
-            return await _timetableService.FetchTimetableAsync(stop, cancellationToken);
+            await _logger.Log($"Fetcing timetable for stop {id}.");
+            var response = await _timetableService.FetchTimetableAsync(id, cancellationToken);
+            return response;
         }
     }
 }

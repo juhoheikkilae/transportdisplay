@@ -8,7 +8,7 @@ using TransportDisplay.API.Services;
 using TransportDisplay.API.Clients;
 using TransportDisplay.API.Models;
 
-namespace TransportDisplay.API.Tests
+namespace TransportDisplayApiTests
 {
     public class ServiceTests
     {

@@ -7,25 +7,28 @@ using TransportDisplay.API.Models;
 using TransportDisplay.API.Clients;
 using TransportDisplay.API.Settings;
 
-namespace TransportDisplay.API.Tests
+namespace TransportDisplayApiTests
 {
-    public class ClientIntegrationTests
+    public partial class IntegrationTests
     {
-        // Should return timetable from service
-        [Fact]
-        public async Task ShouldFetchTimetableAsync()
+        public class ClientTests
         {
-            using (var cts = new CancellationTokenSource())
+            // Should return timetable from service
+            [Fact]
+            public async Task ShouldFetchTimetableAsync()
             {
-                // Example stop id
-                string stopId = "HSL:2314601";
+                using (var cts = new CancellationTokenSource())
+                {
+                    // Example stop id
+                    string stopId = "HSL:2314601";
 
-                var timeTableClient = new HslTimetableClient(
-                    new HttpClient { BaseAddress = new Uri(Constants.TransportApiBaseUri) });
+                    var timeTableClient = new HslTimetableClient(
+                        new HttpClient { BaseAddress = new Uri(Constants.TransportApiBaseUri) });
 
-                var timetable = await timeTableClient.GetTimetableAsync(stopId, cts.Token);
+                    var timetable = await timeTableClient.GetTimetableAsync(stopId, cts.Token);
 
-                Assert.IsType<TimetableModel.Timetable>(timetable);
+                    Assert.IsType<TimetableModel.Timetable>(timetable);
+                }
             }
         }
     }

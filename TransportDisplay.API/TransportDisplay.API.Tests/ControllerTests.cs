@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc.Core;
 using TransportDisplay.API.Controllers;
 using TransportDisplay.API.Services;
 using TransportDisplay.API.Models;
+using TransportDisplay.API.Logger;
 
-namespace TransportDisplay.API.Tests
+namespace TransportDisplayApiTests
 {
     public class ControllerTests
     {
@@ -29,7 +30,7 @@ namespace TransportDisplay.API.Tests
             var timetableService = new Mock<ITimetableService>();
             timetableService.Setup(_ => _.FetchTimetableAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(_mockTimetable);
 
-            var timetableController = new TimetableController(timetableService.Object, new Logger.DebugLogger());
+            var timetableController = new TimetableController(timetableService.Object, new DebugLogger());
 
             var output = await timetableController.GetAsync(mockStop, CancellationToken.None);
 
