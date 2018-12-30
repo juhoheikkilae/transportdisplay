@@ -10,7 +10,7 @@ import { TimetableService } from '../timetable.service';
 export class TimetableComponent implements OnInit {
 
   timetable: Timetable;
-  stopId: 'HSL:2314601';
+  stopId = 'HSL:2314601';
 
   getTimetable(stopId: string): void {
     this.timetableService.getTimetable(stopId)

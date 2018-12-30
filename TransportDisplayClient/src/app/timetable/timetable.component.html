@@ -1,3 +1,9 @@
-<p>
-  timetable works!
-</p>
+<div *ngIf="timetable">
+  <h2>Timetable</h2>
+  <h3>{{ timetable.stop.name }}</h3>
+  <ul>
+    <li *ngFor="let departure of timetable.departures">
+      <span>Line:</span> {{ departure.line.id }}
+    </li>
+  </ul>
+</div>

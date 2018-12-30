@@ -1,10 +1,12 @@
 export class Timetable {
     stop: Stop;
     departures: Departure[];
+    arrivalEstimates: ArrivalEstimate[];
 }
 
 export class Stop {
     name: string;
+    lines: Line[];
 }
 
 export class Line {
@@ -18,3 +20,5 @@ export class Departure {
     line: Line;
     time: Date;
 }
+
+export class ArrivalEstimate {}

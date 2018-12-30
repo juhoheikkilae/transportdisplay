@@ -11,7 +11,9 @@ export class TimetableService {
   private timetableUrl = 'https://localhost:5001/api/timetable?id=';
 
   getTimetable(id: string): Observable<Timetable> {
-    return this.http.get<Timetable>(encodeURI(this.timetableUrl + id));
+    const response = this.http.get<Timetable>(encodeURI(this.timetableUrl + id));
+    return response;
   }
+
   constructor(private http: HttpClient) {}
 }

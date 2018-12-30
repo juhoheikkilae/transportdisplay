@@ -47,6 +47,7 @@ namespace TransportDisplay.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(builder => builder.AllowAnyHeader().AllowAnyOrigin());
             }
             else
             {
