@@ -13,22 +13,34 @@ namespace TransportDisplayApiTests
     {
         public class ClientTests
         {
+            private static HttpClient _httpClient = new HttpClient{
+                BaseAddress = new Uri(Constants.TransportApiBaseUri)};
+
             // Should return timetable from service
             [Fact]
             public async Task ShouldFetchTimetableAsync()
             {
-                using (var cts = new CancellationTokenSource())
-                {
-                    // Example stop id
-                    string stopId = "HSL:2314601";
+                // Example stop id
+                string stopId = "HSL:2314601";
 
-                    var timeTableClient = new HslTimetableClient(
-                        new HttpClient { BaseAddress = new Uri(Constants.TransportApiBaseUri) });
+                var timeTableClient = new HslTimetableClient(_httpClient);
 
-                    var timetable = await timeTableClient.GetTimetableAsync(stopId, cts.Token);
+                var timetable = await timeTableClient.GetTimetableAsync(stopId, CancellationToken.None);
 
-                    Assert.IsType<TimetableModel.Timetable>(timetable);
-                }
+                Assert.IsType<TimetableModel.Timetable>(timetable);
+            }
+
+            [Fact]
+            public async Task ShouldFetchArrivalEstimatesAsync()
+            {
+                // TODO
+                string stopId = "validstopidneededhere";
+
+                var arrivalEstimateClient = new ArrivalEstimateClient(_httpClient);
+
+                var estimates = arrivalEstimateClient.GetArrivalEstimatesAsync(stopId, CancellationToken.None);
+
+                Assert.IsType<TimetableModel.ArrivalEstimate[]>(estimates);
             }
         }
     }

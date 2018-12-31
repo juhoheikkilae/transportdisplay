@@ -25,7 +25,7 @@ namespace TransportDisplayApiTests
                 using (var httpClient = new HttpClient())
                 {
                     var hslClient = new HslTimetableClient(httpClient);
-                    var arrivalEstimateClient = new ArrivalEstimateClient();
+                    var arrivalEstimateClient = new ArrivalEstimateClient(httpClient);
                     var timetableService = new TimetableService(hslClient, arrivalEstimateClient);
                     var timetableController = new TimetableController(timetableService, logger);
 
