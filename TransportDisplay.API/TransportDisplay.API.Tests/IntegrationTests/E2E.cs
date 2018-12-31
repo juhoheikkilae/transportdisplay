@@ -16,23 +16,19 @@ namespace TransportDisplayApiTests
     {
         public class E2E
         {
+            private static ILogger _logger = new DebugLogger();
+            private static HttpClient _httpClient = new HttpClient();
             private string exampleStop = "HSL:2314601";
 
             [Fact]
             public async Task ShouldReturnTimetable()
             {
-                var logger = new DebugLogger();
-                using (var httpClient = new HttpClient())
-                {
-                    var hslClient = new HslTimetableClient(httpClient);
-                    var arrivalEstimateClient = new ArrivalEstimateClient(httpClient);
-                    var timetableService = new TimetableService(hslClient, arrivalEstimateClient);
-                    var timetableController = new TimetableController(timetableService, logger);
+                var hslClient = new HslTimetableClient(_httpClient);
+                var timetableService = new TimetableService(hslClient);
+                var timetableController = new TimetableController(timetableService, _logger);
 
-                    var result = await timetableController.GetAsync(exampleStop, CancellationToken.None);
-                    Assert.IsType<ActionResult<TimetableModel.Timetable>>(result);
-                }
-
+                var result = await timetableController.ScheduledDepartures(exampleStop, CancellationToken.None);
+                Assert.IsType<ActionResult<TimetableModel.Timetable>>(result);
             }
         }
     }

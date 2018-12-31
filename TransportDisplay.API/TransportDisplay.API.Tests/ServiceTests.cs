@@ -26,13 +26,10 @@ namespace TransportDisplayApiTests
         public async Task ShouldReturnTimetable()
         {
             var timetableClient = new Mock<ITimetableClient>();
-            var arrivalEstimateClient = new Mock<IArrivalEstimateClient>();
             timetableClient.Setup(s => s.GetTimetableAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(_mockTimetable);
 
-            var timetableService = new TimetableService(
-                timetableClient.Object,
-                arrivalEstimateClient.Object);
+            var timetableService = new TimetableService(timetableClient.Object);
 
             var output = await timetableService.FetchTimetableAsync(mockStop, CancellationToken.None);
 

@@ -32,7 +32,7 @@ namespace TransportDisplayApiTests
 
             var timetableController = new TimetableController(timetableService.Object, new DebugLogger());
 
-            var output = await timetableController.GetAsync(mockStop, CancellationToken.None);
+            var output = await timetableController.ScheduledDepartures(mockStop, CancellationToken.None);
 
             Assert.IsType<ActionResult<TimetableModel.Timetable>>(output);
         }

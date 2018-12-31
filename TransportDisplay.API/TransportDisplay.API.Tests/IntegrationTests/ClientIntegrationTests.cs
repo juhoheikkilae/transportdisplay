@@ -33,14 +33,20 @@ namespace TransportDisplayApiTests
             [Fact]
             public async Task ShouldFetchArrivalEstimatesAsync()
             {
-                // TODO
-                string stopId = "validstopidneededhere";
-
-                var arrivalEstimateClient = new ArrivalEstimateClient(_httpClient);
-
-                var estimates = arrivalEstimateClient.GetArrivalEstimatesAsync(stopId, CancellationToken.None);
-
+                // Piispansilta stop
+                string stopId = "HSL:2311220";
+                var arrivalEstimateClient = new HslTimetableClient(_httpClient);
+                var estimates = await arrivalEstimateClient.GetArrivalEstimatesAsync(stopId, CancellationToken.None);
                 Assert.IsType<TimetableModel.ArrivalEstimate[]>(estimates);
+            }
+
+            [Fact]
+            public async Task ShouldFetchStopsAsync()
+            {
+                string search = "Matinkyl";
+                var client = new HslTimetableClient(_httpClient);
+                var stops = await client.GetStopsAsync(search, CancellationToken.None);
+                Assert.IsType<TimetableModel.Stop[]>(stops);
             }
         }
     }
