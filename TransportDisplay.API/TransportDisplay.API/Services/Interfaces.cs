@@ -9,5 +9,6 @@ namespace TransportDisplay.API.Services
     {
         Task<Timetable> FetchTimetableAsync(string stop, CancellationToken cancellationToken);
         Task<ArrivalEstimate> FetchArrivalEstimatesAsync(string stop, CancellationToken cancellationToken);
+        Task<Stop[]> FetchStopsAsync(string search, CancellationToken cancellationToken);
     }
 }

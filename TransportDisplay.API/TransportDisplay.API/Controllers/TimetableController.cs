@@ -10,7 +10,7 @@ using TransportDisplay.API.Services;
 
 namespace TransportDisplay.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class TimetableController : ControllerBase
     {
@@ -23,13 +23,25 @@ namespace TransportDisplay.API.Controllers
             _logger = logger;
         }
 
-        // GET api/timetable?stop={stopId}
+        // GET api/timetable/{stopId}
         [HttpGet]
-        public async Task<ActionResult<TimetableModel.Timetable>> GetAsync(string id, CancellationToken cancellationToken)
+        public async Task<ActionResult<TimetableModel.Timetable>> ScheduledDepartures(string stop, CancellationToken cancellationToken)
         {
-            await _logger.Log($"Fetcing timetable for stop {id}.");
-            var response = await _timetableService.FetchTimetableAsync(id, cancellationToken);
+            await _logger.Log($"Fetcing timetable for stop {stop}.");
+            var response = await _timetableService.FetchTimetableAsync(stop, cancellationToken);
             return response;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<TimetableModel.ArrivalEstimates>> Arrivals(string id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<TimetableModel.Stop[]>> Stops(string id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

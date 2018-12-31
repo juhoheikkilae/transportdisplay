@@ -11,25 +11,19 @@ namespace TransportDisplay.API.Models
             public ArrivalEstimate[] ArrivalEstimates { get; set; }
         }
 
+        public class ArrivalEstimates
+        {
+            public Stop Stop { get; set; }
+            public Line[] Lines { get; set; }
+        }
+
         public class ArrivalEstimate
         {
             public Line Line { get; set; }
             public TimeSpan ArrivesIn { get; set; }
-        }
-        public class Line
-        {
-            // Line id
-            public string Id { get; set; }
-            public string Origin { get; set; }
-            public string Destination { get; set; }
-            public Direction Direction { get; set; }
+            public bool IsRealtimeEstimate { get; set; }
         }
 
-        public class Stop
-        {
-            public string Name { get; set; }
-            public Line[] Lines { get; set; }
-        }
 
         public class Departure
         {
@@ -43,6 +37,22 @@ namespace TransportDisplay.API.Models
             public DateTimeOffset From { get; set; }
             public DateTimeOffset To { get; set; }
             public string Message { get; set; }
+        }
+
+        public class Line
+        {
+            // Line id
+            public string Id { get; set; }
+            public string Origin { get; set; }
+            public string Destination { get; set; }
+            public Direction Direction { get; set; }
+        }
+
+        public class Stop
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public Line[] Lines { get; set; }
         }
 
         public enum Direction

@@ -10,12 +10,10 @@ namespace TransportDisplay.API.Services
     public class TimetableService : ITimetableService
     {
         private readonly ITimetableClient _timetableClient;
-        private readonly IArrivalEstimateClient _arrivalEstimateClient;
 
-        public TimetableService(ITimetableClient timetableClient, IArrivalEstimateClient arrivalEstimateClient)
+        public TimetableService(ITimetableClient timetableClient)
         {
             _timetableClient = timetableClient;
-            _arrivalEstimateClient = arrivalEstimateClient;
         }
 
         public async Task<ArrivalEstimate> FetchArrivalEstimatesAsync(string stop, CancellationToken cancellationToken)
@@ -25,7 +23,12 @@ namespace TransportDisplay.API.Services
 
         public async Task<Timetable> FetchTimetableAsync(string stop, CancellationToken cancellationToken)
         {
-                return await _timetableClient.GetTimetableAsync(stop, cancellationToken);
+            return await _timetableClient.GetTimetableAsync(stop, cancellationToken);
+        }
+
+        public async Task<Stop[]> FetchStopsAsync(string search, CancellationToken cancellationToken)
+        {
+            return await _timetableClient.GetStopsAsync(search, cancellationToken);
         }
     }
 }

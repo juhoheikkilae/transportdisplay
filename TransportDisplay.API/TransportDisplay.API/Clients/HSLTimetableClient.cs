@@ -8,6 +8,7 @@ using TransportDisplay.API.Models;
 using TransportDisplay.API.Settings;
 using TransportDisplay.API.Helpers;
 using System.Linq;
+using static TransportDisplay.API.Clients.Responses;
 
 namespace TransportDisplay.API.Clients
 {
@@ -45,7 +46,42 @@ namespace TransportDisplay.API.Clients
                 "    }",
                 "  }  ",
                 "}");
-            
+
+            return await QueryHslGraphApiAsync<TimetableModel.Timetable, HslTimetableQueryResponse>(
+                query,
+                x => TimetableQueryResponseToTimetable(x),
+                cancellationToken);
+        }
+
+        public async Task<TimetableModel.ArrivalEstimates> GetArrivalEstimatesAsync(
+            string stop, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<TimetableModel.Stop[]> GetStopsAsync(string search, CancellationToken cancellationToken)
+        {
+            var query = String.Join(
+                Environment.NewLine,
+                "{",
+                "  stops(name: \"" + search + "\") {",
+                "    gtfsId",
+                "    name",
+                "  }",
+                "}");
+
+            return await QueryHslGraphApiAsync<TimetableModel.Stop[], HslStopsQueryResponse>(
+                query,
+                s => StopsQueryToStops(s),
+                cancellationToken
+            );
+        }
+
+        // T is return type.
+        // R is type the graph api response is deserialized to before transformation.
+        // T transform(R) is function to transform API response to return type.
+        private async Task<T> QueryHslGraphApiAsync<T, R>(string query, Func<R, T> transform, CancellationToken cancellationToken)
+        {
             var responseMessage = await _httpClient.PostStreamAsync(
                 query,
                 Constants.TransportApiBaseUri,
@@ -53,13 +89,15 @@ namespace TransportDisplay.API.Clients
                 cancellationToken
             );
 
-            var response = await (await responseMessage.Content.ReadAsStreamAsync())
-                .DeserializeResponseStream<Responses.HslTimetableQueryResponse>(cancellationToken);
-            return TimetableQueryResponseToTimetable(response);
+            using (var contentStream = await responseMessage.Content.ReadAsStreamAsync())
+            {
+                var response = await contentStream.DeserializeResponseStream<R>(cancellationToken);
+                return transform(response);
+            }
         }
 
-        private TimetableModel.Timetable TimetableQueryResponseToTimetable(
-            Responses.HslTimetableQueryResponse response)
+        private static TimetableModel.Timetable TimetableQueryResponseToTimetable(
+            HslTimetableQueryResponse response)
         {
             var responseData = response.Data;
 
@@ -75,10 +113,23 @@ namespace TransportDisplay.API.Clients
                         Line = new TimetableModel.Line
                         {
                             Id = s.Trip.RouteShortName
-                        }
+                        },
+                        Time = Helpers.DateTimeHelpers.FromUnixTime(s.ServiceDay + s.ScheduledDeparture)
                     }
                 ).ToArray()
             };
+        }
+
+        private static TimetableModel.Stop[] StopsQueryToStops(
+            HslStopsQueryResponse response)
+        {
+            var responseData = response.Data;
+            return responseData.Stops.Select(s =>
+                new TimetableModel.Stop
+                {
+                    Name = s.Name,
+                    Id = s.GtfsId
+                }).ToArray();
         }
     }
 }

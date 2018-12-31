@@ -32,7 +32,6 @@ namespace TransportDisplay.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<TransportDisplay.API.Logger.ILogger, DebugLogger>();
-            services.AddSingleton<IArrivalEstimateClient, ArrivalEstimateClient>();
             services.AddSingleton<ITimetableClient, HslTimetableClient>();
             services.AddSingleton<ITimetableService, TimetableService>();
 
