@@ -8,7 +8,7 @@ import { Timetable } from './timetable';
 })
 export class TimetableService {
 
-  private timetableUrl = 'https://localhost:5001/api/timetable?id=';
+  private timetableUrl = 'https://localhost:5001/api/timetable/scheduleddepartures?stop=';
 
   getTimetable(id: string): Observable<Timetable> {
     const response = this.http.get<Timetable>(encodeURI(this.timetableUrl + id));
