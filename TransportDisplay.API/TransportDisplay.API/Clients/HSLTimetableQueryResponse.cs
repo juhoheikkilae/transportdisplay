@@ -10,7 +10,7 @@ namespace TransportDisplay.API.Clients
 
     public partial class Responses
     {
-        public partial class HslTimetableQueryResponse
+        public partial class HslApiResponse
         {
             [JsonProperty("data")]
             public Data Data { get; set; }
@@ -20,10 +20,16 @@ namespace TransportDisplay.API.Clients
         {
             [JsonProperty("stop")]
             public Stop Stop { get; set; }
+
+            [JsonProperty("stops")]
+            public Stop[] Stops { get; set; }
         }
 
         public partial class Stop
         {
+            [JsonProperty("gtfsId")]
+            public string GtfsId { get; set; }
+
             [JsonProperty("name")]
             public string Name { get; set; }
 

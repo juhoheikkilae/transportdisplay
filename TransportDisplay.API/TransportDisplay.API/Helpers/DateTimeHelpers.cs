@@ -18,6 +18,10 @@ namespace TransportDisplay.API.Helpers
             return epoch.AddSeconds(unixTime);
         }
 
+        public static long ToUnixTime(DateTime dt) {
+            return (long)Math.Round((dt - epoch).TotalSeconds);
+        }
+
         public static TimeSpan SecondsToTime(long seconds) {
             return new TimeSpan(seconds * 10000);
         }

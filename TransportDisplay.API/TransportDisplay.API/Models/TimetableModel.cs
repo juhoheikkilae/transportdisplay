@@ -14,7 +14,7 @@ namespace TransportDisplay.API.Models
         public class ArrivalEstimates
         {
             public Stop Stop { get; set; }
-            public Line[] Lines { get; set; }
+            public ArrivalEstimate[] Estimates { get; set; }
         }
 
         public class ArrivalEstimate
