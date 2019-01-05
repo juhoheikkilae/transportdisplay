@@ -36,21 +36,25 @@ namespace TransportDisplay.API.Clients
                 }
             ).ToArray();
 
-        internal static TimetableModel.ArrivalEstimates ToArrivalEstimates(
-            this HslApiResponse response) => new TimetableModel.ArrivalEstimates
-            {
-                Stop = new TimetableModel.Stop {
-                    Name = response.Data.Stop.Name
-                },
-                Estimates = response.Data.Stop.StoptimesWithoutPatterns.Select(l => new TimetableModel.ArrivalEstimate {
-                    Line = new TimetableModel.Line {
+        internal static TimetableModel.ArrivalEstimate[] ToArrivalEstimates(
+            this HslApiResponse response) => response.Data.Stop.StoptimesWithoutPatterns
+                .Select(l => new TimetableModel.ArrivalEstimate
+                {
+                    Line = new TimetableModel.Line
+                    {
                         Id = l.Trip.RouteShortName
                     },
                     ArrivesIn = new TimeSpan(0, 0,
-                        (int)(l.ServiceDay + l.RealtimeArrival - 
+                        (int)(l.ServiceDay + l.RealtimeArrival -
                         DateTimeHelpers.ToUnixTime(DateTime.UtcNow))),
                     IsRealtimeEstimate = l.Realtime
-                }).ToArray()
+                }).ToArray();
+
+        internal static TimetableModel.Stop ToStop(this HslApiResponse response) =>
+            new TimetableModel.Stop
+            {
+                Name = response.Data.Stop.Name,
+                Id = response.Data.Stop.GtfsId
             };
     }
 }

@@ -9,8 +9,8 @@ using TransportDisplay.API.Controllers;
 using TransportDisplay.API.Services;
 using TransportDisplay.API.Models;
 using TransportDisplay.API.Logger;
-using static TransportDisplay.API.Tests.Mock.Mocks;
 
+using static TransportDisplay.API.Tests.Mock.Mocks;
 namespace TransportDisplayApiTests
 {
     public class ControllerTests
@@ -20,9 +20,8 @@ namespace TransportDisplayApiTests
         public async Task ShouldReturnTimetable()
         {
             var timetableService = new Mock<ITimetableService>();
-            timetableService.Setup(_ => _.FetchTimetableAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(mockTimetable);
 
-            var timetableController = new TimetableController(timetableService.Object, new DebugLogger());
+            var timetableController = new TimetableController(timetableService.Object);
 
             var output = await timetableController.ScheduledDepartures(mockStopId, CancellationToken.None);
 
@@ -34,13 +33,12 @@ namespace TransportDisplayApiTests
         public async Task ShouldReturnArrivals()
         {
             var timetableService = new Mock<ITimetableService>();
-            timetableService.Setup(_ => _.FetchArrivalEstimatesAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(mockArrivals);
 
-            var timetableController = new TimetableController(timetableService.Object, new DebugLogger());
+            var timetableController = new TimetableController(timetableService.Object);
 
             var output = await timetableController.Arrivals(mockStopId, CancellationToken.None);
 
-            Assert.IsType<ActionResult<TimetableModel.ArrivalEstimates>>(output);
+            Assert.IsType<ActionResult<TimetableModel.Timetable>>(output);
         }
 
         // Should retrieve stops from service
@@ -48,9 +46,8 @@ namespace TransportDisplayApiTests
         public async Task ShouldReturnStops()
         {
             var timetableService = new Mock<ITimetableService>();
-            timetableService.Setup(_ => _.FetchStopsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(mockStopArray);
 
-            var timetableController = new TimetableController(timetableService.Object, new DebugLogger());
+            var timetableController = new TimetableController(timetableService.Object);
 
             var output = await timetableController.Stops(mockStopId, CancellationToken.None);
 

@@ -55,7 +55,7 @@ namespace TransportDisplay.API.Clients
                 cancellationToken);
         }
 
-        public async Task<TimetableModel.ArrivalEstimates> GetArrivalEstimatesAsync(
+        public async Task<TimetableModel.ArrivalEstimate[]> GetArrivalEstimatesAsync(
             string stop, CancellationToken cancellationToken)
         {
             string query = String.Join(
@@ -80,14 +80,32 @@ namespace TransportDisplay.API.Clients
                 "    }",
                 "  }  ",
                 "}");
-            
-            return await QueryHslGraphApiAsync<TimetableModel.ArrivalEstimates, HslApiResponse>(
+
+            return await QueryHslGraphApiAsync<TimetableModel.ArrivalEstimate[], HslApiResponse>(
                 query,
                 response => response.ToArrivalEstimates(),
                 cancellationToken);
         }
 
-        public async Task<TimetableModel.Stop[]> GetStopsAsync(string search, CancellationToken cancellationToken)
+        public async Task<TimetableModel.Stop> GetStopByIdAsync(string id, CancellationToken cancellationToken)
+        {
+            var query = String.Join(
+                Environment.NewLine,
+                "{",
+                "  stop(id: \"" + id + "\") {",
+                "    gtfsId",
+                "    name",
+                "  }",
+                "}");
+            
+            return await QueryHslGraphApiAsync<TimetableModel.Stop, HslApiResponse>(
+                query,
+                response => response.ToStop(),
+                cancellationToken
+            );
+        }
+
+        public async Task<TimetableModel.Stop[]> SearchStopsAsync(string search, CancellationToken cancellationToken)
         {
             var query = String.Join(
                 Environment.NewLine,
@@ -124,6 +142,4 @@ namespace TransportDisplay.API.Clients
             }
         }
     }
-
-    
 }

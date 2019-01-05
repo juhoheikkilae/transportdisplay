@@ -37,7 +37,7 @@ namespace TransportDisplayApiTests
                 string stopId = "HSL:2311220";
                 var arrivalEstimateClient = new HslTimetableClient(_httpClient);
                 var estimates = await arrivalEstimateClient.GetArrivalEstimatesAsync(stopId, CancellationToken.None);
-                Assert.IsType<TimetableModel.ArrivalEstimates>(estimates);
+                Assert.IsType<TimetableModel.ArrivalEstimate[]>(estimates);
             }
 
             [Fact]
@@ -45,8 +45,18 @@ namespace TransportDisplayApiTests
             {
                 string search = "Matinkyl";
                 var client = new HslTimetableClient(_httpClient);
-                var stops = await client.GetStopsAsync(search, CancellationToken.None);
+                var stops = await client.SearchStopsAsync(search, CancellationToken.None);
                 Assert.IsType<TimetableModel.Stop[]>(stops);
+            }
+
+            [Fact]
+            public async Task ShouldFetchStopAsync()
+            {
+                // Piispansilta stop
+                string stopId = "HSL:2311220";
+                ITimetableClient client = new HslTimetableClient(_httpClient);
+                var stop = await client.GetStopByIdAsync(stopId, CancellationToken.None);
+                Assert.IsType<TimetableModel.Stop>(stop);
             }
         }
     }

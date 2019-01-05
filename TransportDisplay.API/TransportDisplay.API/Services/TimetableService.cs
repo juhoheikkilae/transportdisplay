@@ -16,19 +16,22 @@ namespace TransportDisplay.API.Services
             _timetableClient = timetableClient;
         }
 
-        public async Task<ArrivalEstimates> FetchArrivalEstimatesAsync(string stop, CancellationToken cancellationToken)
-        {
-            return await _timetableClient.GetArrivalEstimatesAsync(stop, cancellationToken);
-        }
+        public async Task<Timetable> FetchArrivalEstimatesAsync(string stop, CancellationToken cancellationToken)
+            => new Timetable {
+                Stop = await _timetableClient.GetStopByIdAsync(stop, cancellationToken),
+                ArrivalEstimates = await _timetableClient.GetArrivalEstimatesAsync(stop, cancellationToken)
+            };
 
         public async Task<Timetable> FetchTimetableAsync(string stop, CancellationToken cancellationToken)
         {
-            return await _timetableClient.GetTimetableAsync(stop, cancellationToken);
+            var timetable = await _timetableClient.GetTimetableAsync(stop, cancellationToken);
+            timetable.Stop.Id = stop;
+            return timetable;
         }
 
-        public async Task<Stop[]> FetchStopsAsync(string search, CancellationToken cancellationToken)
+        public async Task<Stop[]> SearchStopsAsync(string search, CancellationToken cancellationToken)
         {
-            return await _timetableClient.GetStopsAsync(search, cancellationToken);
+            return await _timetableClient.SearchStopsAsync(search, cancellationToken);
         }
     }
 }

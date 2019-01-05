@@ -18,8 +18,6 @@ namespace TransportDisplayApiTests
         public async Task ShouldReturnTimetable()
         {
             var timetableClient = new Mock<ITimetableClient>();
-            timetableClient.Setup(s => s.GetTimetableAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(mockTimetable);
 
             var timetableService = new TimetableService(timetableClient.Object);
 
@@ -32,26 +30,22 @@ namespace TransportDisplayApiTests
         public async Task ShouldReturnArrivals()
         {
             var timetableClient = new Mock<ITimetableClient>();
-            timetableClient.Setup(s => s.GetArrivalEstimatesAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(mockArrivals);
 
             var timetableService = new TimetableService(timetableClient.Object);
 
             var output = await timetableService.FetchArrivalEstimatesAsync(mockStopId, CancellationToken.None);
 
-            Assert.IsType<TimetableModel.ArrivalEstimates>(output);
+            Assert.IsType<TimetableModel.Timetable>(output);
         }
 
         [Fact]
         public async Task ShouldReturnStops()
         {
             var timetableClient = new Mock<ITimetableClient>();
-            timetableClient.Setup(s => s.GetStopsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(mockStopArray);
 
             var timetableService = new TimetableService(timetableClient.Object);
 
-            var output = await timetableService.FetchStopsAsync(mockStopId, CancellationToken.None);
+            var output = await timetableService.SearchStopsAsync(mockStopId, CancellationToken.None);
 
             Assert.IsType<TimetableModel.Stop[]>(output);
         }

@@ -16,7 +16,6 @@ namespace TransportDisplayApiTests
     {
         public class E2E
         {
-            private static ILogger _logger = new DebugLogger();
             private static HttpClient _httpClient = new HttpClient();
             private string exampleStop = "HSL:2314601";
             private string exampleSearch = "Mati";
@@ -26,7 +25,7 @@ namespace TransportDisplayApiTests
             {
                 var hslClient = new HslTimetableClient(_httpClient);
                 var timetableService = new TimetableService(hslClient);
-                var timetableController = new TimetableController(timetableService, _logger);
+                var timetableController = new TimetableController(timetableService);
 
                 var result = await timetableController.ScheduledDepartures(exampleStop, CancellationToken.None);
                 Assert.IsType<ActionResult<TimetableModel.Timetable>>(result);
@@ -37,7 +36,7 @@ namespace TransportDisplayApiTests
             {
                 var hslClient = new HslTimetableClient(_httpClient);
                 var timetableService = new TimetableService(hslClient);
-                var timetableController = new TimetableController(timetableService, _logger);
+                var timetableController = new TimetableController(timetableService);
 
                 var result = await timetableController.Stops(exampleSearch, CancellationToken.None);
                 Assert.IsType<ActionResult<TimetableModel.Stop[]>>(result);
@@ -48,10 +47,10 @@ namespace TransportDisplayApiTests
             {
                 var hslClient = new HslTimetableClient(_httpClient);
                 var timetableService = new TimetableService(hslClient);
-                var timetableController = new TimetableController(timetableService, _logger);
+                var timetableController = new TimetableController(timetableService);
 
                 var result = await timetableController.Arrivals(exampleStop, CancellationToken.None);
-                Assert.IsType<ActionResult<TimetableModel.ArrivalEstimates>>(result);
+                Assert.IsType<ActionResult<TimetableModel.Timetable>>(result);
             }
         }
     }

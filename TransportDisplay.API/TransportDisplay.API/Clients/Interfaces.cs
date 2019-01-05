@@ -10,10 +10,13 @@ namespace TransportDisplay.API.Clients
         Task<TimetableModel.Timetable> GetTimetableAsync(
             string stop, CancellationToken cancellationToken);
 
-        Task<TimetableModel.ArrivalEstimates> GetArrivalEstimatesAsync(
+        Task<TimetableModel.ArrivalEstimate[]> GetArrivalEstimatesAsync(
             string stop, CancellationToken cancellationToken);
 
-        Task<TimetableModel.Stop[]> GetStopsAsync(
+        Task<TimetableModel.Stop> GetStopByIdAsync(
+            string id, CancellationToken cancellationToken);
+
+        Task<TimetableModel.Stop[]> SearchStopsAsync(
             string search, CancellationToken cancellationToken);
     }
 

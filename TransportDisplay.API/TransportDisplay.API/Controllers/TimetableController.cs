@@ -12,28 +12,24 @@ namespace TransportDisplay.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class TimetableController : ControllerBase
+    public class TimetableController : ControllerBase, ITimetableController
     {
-        private readonly ILogger _logger;
         private readonly ITimetableService _timetableService;
 
-        public TimetableController(ITimetableService timetableService, ILogger logger)
+        public TimetableController(ITimetableService timetableService)
         {
             _timetableService = timetableService;
-            _logger = logger;
         }
 
         // GET api/timetable/{stopId}
         [HttpGet]
         public async Task<ActionResult<TimetableModel.Timetable>> ScheduledDepartures(string stop, CancellationToken cancellationToken)
         {
-            await _logger.Log($"Fetcing timetable for stop {stop}.");
-            var response = await _timetableService.FetchTimetableAsync(stop, cancellationToken);
-            return response;
+            return await _timetableService.FetchTimetableAsync(stop, cancellationToken);
         }
 
         [HttpGet]
-        public async Task<ActionResult<TimetableModel.ArrivalEstimates>> Arrivals(string stop, CancellationToken cancellationToken)
+        public async Task<ActionResult<TimetableModel.Timetable>> Arrivals(string stop, CancellationToken cancellationToken)
         {
             return await _timetableService.FetchArrivalEstimatesAsync(stop, cancellationToken);
         }
@@ -41,7 +37,7 @@ namespace TransportDisplay.API.Controllers
         [HttpGet]
         public async Task<ActionResult<TimetableModel.Stop[]>> Stops(string search, CancellationToken cancellationToken)
         {
-            return await _timetableService.FetchStopsAsync(search, cancellationToken);
+            return await _timetableService.SearchStopsAsync(search, cancellationToken);
         }
     }
 }

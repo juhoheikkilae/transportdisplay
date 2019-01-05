@@ -19,12 +19,12 @@ namespace TransportDisplay.API.Tests.Mock
 
         internal static TimetableModel.Timetable mockTimetable = new TimetableModel.Timetable
         {
-            Stop = mockStop
+            Stop = mockStop,
+            Departures = mockDepartures
         };
 
-        internal static TimetableModel.ArrivalEstimates mockArrivals = new TimetableModel.ArrivalEstimates
-        {
-            Stop = mockStop
-        };
+        internal static TimetableModel.Departure[] mockDepartures = {};
+
+        internal static TimetableModel.ArrivalEstimate[] mockArrivals = {};
     }
 }
