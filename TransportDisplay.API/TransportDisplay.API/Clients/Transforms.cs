@@ -46,7 +46,7 @@ namespace TransportDisplay.API.Clients
                     },
                     ArrivesIn = new TimeSpan(0, 0,
                         (int)(l.ServiceDay + l.RealtimeArrival -
-                        DateTimeHelpers.ToUnixTime(DateTime.UtcNow))),
+                        DateTimeHelpers.ToUnixTime(DateTime.UtcNow))).TotalMinutes,
                     IsRealtimeEstimate = l.Realtime
                 }).ToArray();
 

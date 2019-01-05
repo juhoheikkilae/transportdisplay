@@ -14,7 +14,7 @@ namespace TransportDisplay.API.Models
         public class ArrivalEstimate
         {
             public Line Line { get; set; }
-            public TimeSpan ArrivesIn { get; set; }
+            public double ArrivesIn { get; set; }
             public bool IsRealtimeEstimate { get; set; }
         }
 

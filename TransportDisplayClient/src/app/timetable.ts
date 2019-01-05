@@ -21,4 +21,8 @@ export class Departure {
     time: Date;
 }
 
-export class ArrivalEstimate {}
+export class ArrivalEstimate {
+    line: Line;
+    arrivesIn: number;
+    isRealTimeEstimate: boolean;
+}

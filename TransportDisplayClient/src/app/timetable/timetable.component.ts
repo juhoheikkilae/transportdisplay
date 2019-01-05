@@ -10,11 +10,17 @@ import { TimetableService } from '../timetable.service';
 export class TimetableComponent implements OnInit {
 
   timetable: Timetable;
+  arrivalEltimates: Timetable;
   stopId = 'HSL:2314601';
 
   getTimetable(stopId: string): void {
     this.timetableService.getTimetable(stopId)
       .subscribe(timetable => this.timetable = timetable);
+  }
+
+  getArrivalEstimates(stopId: string): void {
+    this.timetableService.getArrivals(stopId)
+      .subscribe(timetable => this.arrivalEltimates = timetable);
   }
 
   constructor(private timetableService: TimetableService) { }
