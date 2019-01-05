@@ -33,15 +33,15 @@ namespace TransportDisplay.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<TimetableModel.ArrivalEstimates>> Arrivals(string id, CancellationToken cancellationToken)
+        public async Task<ActionResult<TimetableModel.ArrivalEstimates>> Arrivals(string stop, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _timetableService.FetchArrivalEstimatesAsync(stop, cancellationToken);
         }
 
         [HttpGet]
-        public async Task<ActionResult<TimetableModel.Stop[]>> Stops(string id, CancellationToken cancellationToken)
+        public async Task<ActionResult<TimetableModel.Stop[]>> Stops(string search, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _timetableService.FetchStopsAsync(search, cancellationToken);
         }
     }
 }

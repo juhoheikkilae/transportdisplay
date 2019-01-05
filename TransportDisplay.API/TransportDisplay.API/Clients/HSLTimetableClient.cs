@@ -24,6 +24,8 @@ namespace TransportDisplay.API.Clients
         public async Task<TimetableModel.Timetable> GetTimetableAsync(
             string stop, CancellationToken cancellationToken)
         {
+            System.Diagnostics.Debug.WriteLine("Fetching timetables!");
+
             string query = String.Join(
                 Environment.NewLine,
                 "{",

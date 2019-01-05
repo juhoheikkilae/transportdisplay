@@ -15,6 +15,8 @@ namespace TransportDisplay.API.Helpers
         public static async Task<HttpResponseMessage> PostStreamAsync(
             this HttpClient httpClient, object content, string url, string contentType, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             using (var request = new HttpRequestMessage(HttpMethod.Post, url))
             using (var httpContent = CreateHttpContent(content, contentType))
             {

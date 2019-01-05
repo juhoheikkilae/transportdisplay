@@ -16,9 +16,9 @@ namespace TransportDisplay.API.Services
             _timetableClient = timetableClient;
         }
 
-        public async Task<ArrivalEstimate> FetchArrivalEstimatesAsync(string stop, CancellationToken cancellationToken)
+        public async Task<ArrivalEstimates> FetchArrivalEstimatesAsync(string stop, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _timetableClient.GetArrivalEstimatesAsync(stop, cancellationToken);
         }
 
         public async Task<Timetable> FetchTimetableAsync(string stop, CancellationToken cancellationToken)
