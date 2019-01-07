@@ -8,53 +8,59 @@ namespace TransportDisplay.API.Clients
 {
     public static class HslTimetableQueryTransformExtensions
     {
-        internal static TimetableModel.Timetable ToTimetable(
-            this HslApiResponse response) => new TimetableModel.Timetable
+        internal static TimetableModel.Timetable ToDepartureTimetable(
+            this Stop stop) => new TimetableModel.Timetable
             {
-                Stop = new TimetableModel.Stop
-                {
-                    Name = response.Data.Stop.Name
-                },
-                Departures = response.Data.Stop.StoptimesWithoutPatterns.Select(
-                    s => new TimetableModel.Departure
+                Stop = stop.ToStop(),
+                Departures = stop.StoptimesWithoutPatterns.Select(
+                    x => new TimetableModel.Departure
                     {
-                        Line = new TimetableModel.Line
-                        {
-                            Id = s.Trip.RouteShortName
-                        },
-                        Time = Helpers.DateTimeHelpers.FromUnixTime(s.ServiceDay + s.ScheduledDeparture)
+                        Line = x.Trip.ToLine(),
+                        Time = Helpers.DateTimeHelpers.FromUnixTime(x.ServiceDay + x.ScheduledDeparture)
                     }
                 ).ToArray()
             };
 
-        internal static TimetableModel.Stop[] ToStops(this HslApiResponse response) =>
-            response.Data.Stops.Select(
-                s => new TimetableModel.Stop
-                {
-                    Name = s.Name,
-                    Id = s.GtfsId
-                }
+        internal static TimetableModel.Timetable ToArrivalTimetable(
+            this Stop stop) => new TimetableModel.Timetable
+            {
+                Stop = stop.ToStop(),
+                ArrivalEstimates = stop.StoptimesWithoutPatterns != null ?
+                    stop.StoptimesWithoutPatterns.Select(x => new TimetableModel.ArrivalEstimate
+                    {
+                        Line = x.Trip.ToLine(),
+                        ArrivesIn = new TimeSpan(0, 0,
+                            (int)(x.ServiceDay + x.RealtimeArrival -
+                            DateTimeHelpers.ToUnixTime(DateTime.UtcNow))).TotalMinutes,
+                        IsRealtimeEstimate = x.Realtime
+                    }).ToArray() : null
+            };
+
+        internal static TimetableModel.Stop[] ToStops(this Stop[] stops) =>
+            stops.Select(
+                s => s.ToStop()
             ).ToArray();
 
-        internal static TimetableModel.ArrivalEstimate[] ToArrivalEstimates(
-            this HslApiResponse response) => response.Data.Stop.StoptimesWithoutPatterns
-                .Select(l => new TimetableModel.ArrivalEstimate
-                {
-                    Line = new TimetableModel.Line
-                    {
-                        Id = l.Trip.RouteShortName
-                    },
-                    ArrivesIn = new TimeSpan(0, 0,
-                        (int)(l.ServiceDay + l.RealtimeArrival -
-                        DateTimeHelpers.ToUnixTime(DateTime.UtcNow))).TotalMinutes,
-                    IsRealtimeEstimate = l.Realtime
-                }).ToArray();
+        internal static TimetableModel.Line ToLine(this Trip trip)
+            => new TimetableModel.Line
+            {
+                Id = trip.RouteShortName,
+                Origin = trip.Route.LongName.Split('-')[0].Trim(),
+                Destination = trip.Route.LongName.Split('-')[trip.Route.LongName.Split('-').Length - 1].Trim(),
+                Direction = trip.DirectionId == 0 ? TimetableModel.Direction.NORMAL : TimetableModel.Direction.REVERSED
+            };
 
-        internal static TimetableModel.Stop ToStop(this HslApiResponse response) =>
+        internal static TimetableModel.Stop ToStop(this Stop stop) =>
             new TimetableModel.Stop
             {
-                Name = response.Data.Stop.Name,
-                Id = response.Data.Stop.GtfsId
+                Name = stop.Name,
+                Id = stop.GtfsId,
+                Lines = stop.Routes != null ? stop.Routes.Select(r => new TimetableModel.Line
+                {
+                    Id = r.ShortName,
+                    Name = r.LongName,
+                    Origin = r.LongName.Split('-')[0]
+                }).ToArray() : null
             };
     }
 }

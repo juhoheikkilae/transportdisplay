@@ -30,14 +30,18 @@ namespace TransportDisplay.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(x => x.AddPolicy("CorsPolicy", builder =>
+                builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("http://localhost:4200")));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton<TransportDisplay.API.Logger.ILogger, DebugLogger>();
-            services.AddSingleton<ITimetableClient, HslTimetableClient>();
-            services.AddSingleton<ITimetableService, TimetableService>();
 
             // Use HSL graph API to fetch timetable information
             services.AddSingleton<ITimetableClient>(
                 s => new HslTimetableClient(new HttpClient()));
+            services.AddSingleton<ITimetableService, TimetableService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +50,7 @@ namespace TransportDisplay.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors(builder => builder.AllowAnyHeader().AllowAnyOrigin());
+                app.UseCors("CorsPolicy");
             }
             else
             {

@@ -31,6 +31,7 @@ namespace TransportDisplay.API.Clients
                 "{",
                 "  stop(id: \"" + stop + "\") {",
                 "    name",
+                "    gtfsId",
                 "    stoptimesWithoutPatterns {",
                 "      scheduledArrival",
                 "      realtimeArrival",
@@ -44,6 +45,10 @@ namespace TransportDisplay.API.Clients
                 "      headsign",
                 "      trip {",
                 "        routeShortName",
+                "        directionId",
+                "        route {",
+                "          longName",
+                "        }",
                 "      }",
                 "    }",
                 "  }  ",
@@ -51,11 +56,11 @@ namespace TransportDisplay.API.Clients
 
             return await QueryHslGraphApiAsync<TimetableModel.Timetable, HslApiResponse>(
                 query,
-                response => response.ToTimetable(),
+                response => response.Data.Stop.ToDepartureTimetable(),
                 cancellationToken);
         }
 
-        public async Task<TimetableModel.ArrivalEstimate[]> GetArrivalEstimatesAsync(
+        public async Task<TimetableModel.Timetable> GetArrivalEstimatesAsync(
             string stop, CancellationToken cancellationToken)
         {
             string query = String.Join(
@@ -63,6 +68,7 @@ namespace TransportDisplay.API.Clients
                 "{",
                 "  stop(id: \"" + stop + "\") {",
                 "    name",
+                "    gtfsId",
                 "    stoptimesWithoutPatterns {",
                 "      scheduledArrival",
                 "      realtimeArrival",
@@ -76,14 +82,18 @@ namespace TransportDisplay.API.Clients
                 "      headsign",
                 "      trip {",
                 "        routeShortName",
+                "        directionId",
+                "        route {",
+                "          longName",
+                "        }",
                 "      }",
                 "    }",
                 "  }  ",
                 "}");
 
-            return await QueryHslGraphApiAsync<TimetableModel.ArrivalEstimate[], HslApiResponse>(
+            return await QueryHslGraphApiAsync<TimetableModel.Timetable, HslApiResponse>(
                 query,
-                response => response.ToArrivalEstimates(),
+                response => response.Data.Stop.ToArrivalTimetable(),
                 cancellationToken);
         }
 
@@ -95,12 +105,16 @@ namespace TransportDisplay.API.Clients
                 "  stop(id: \"" + id + "\") {",
                 "    gtfsId",
                 "    name",
+                "    routes {",
+                "      shortName",
+                "      longName",
+                "    }",
                 "  }",
                 "}");
-            
+
             return await QueryHslGraphApiAsync<TimetableModel.Stop, HslApiResponse>(
                 query,
-                response => response.ToStop(),
+                response => response.Data.Stop.ToStop(),
                 cancellationToken
             );
         }
@@ -113,12 +127,16 @@ namespace TransportDisplay.API.Clients
                 "  stops(name: \"" + search + "\") {",
                 "    gtfsId",
                 "    name",
+                "    routes {",
+                "      shortName",
+                "      longName",
+                "    }",
                 "  }",
                 "}");
 
             return await QueryHslGraphApiAsync<TimetableModel.Stop[], HslApiResponse>(
                 query,
-                response => response.ToStops(),
+                response => response.Data.Stops.ToStops(),
                 cancellationToken
             );
         }

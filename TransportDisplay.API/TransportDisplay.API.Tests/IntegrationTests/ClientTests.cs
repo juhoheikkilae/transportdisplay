@@ -37,7 +37,7 @@ namespace TransportDisplayApiTests
                 string stopId = "HSL:2311220";
                 var arrivalEstimateClient = new HslTimetableClient(_httpClient);
                 var estimates = await arrivalEstimateClient.GetArrivalEstimatesAsync(stopId, CancellationToken.None);
-                Assert.IsType<TimetableModel.ArrivalEstimate[]>(estimates);
+                Assert.IsType<TimetableModel.Timetable>(estimates);
             }
 
             [Fact]
