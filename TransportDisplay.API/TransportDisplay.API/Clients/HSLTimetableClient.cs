@@ -1,13 +1,10 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using TransportDisplay.API.Models;
 using TransportDisplay.API.Settings;
 using TransportDisplay.API.Helpers;
-using System.Linq;
 using static TransportDisplay.API.Clients.Responses;
 
 namespace TransportDisplay.API.Clients
@@ -15,7 +12,6 @@ namespace TransportDisplay.API.Clients
     public class HslTimetableClient : ITimetableClient
     {
         private readonly HttpClient _httpClient;
-
         public HslTimetableClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
@@ -23,128 +19,63 @@ namespace TransportDisplay.API.Clients
 
         public async Task<TimetableModel.Timetable> GetTimetableAsync(
             string stop, CancellationToken cancellationToken)
-        {
-            System.Diagnostics.Debug.WriteLine("Fetching timetables!");
-
-            string query = String.Join(
-                Environment.NewLine,
-                "{",
-                "  stop(id: \"" + stop + "\") {",
-                "    name",
-                "    gtfsId",
-                "    stoptimesWithoutPatterns {",
-                "      scheduledArrival",
-                "      realtimeArrival",
-                "      arrivalDelay",
-                "      scheduledDeparture",
-                "      realtimeDeparture",
-                "      departureDelay",
-                "      realtime",
-                "      realtimeState",
-                "      serviceDay",
-                "      headsign",
-                "      trip {",
-                "        routeShortName",
-                "        directionId",
-                "        route {",
-                "          longName",
-                "        }",
-                "      }",
-                "    }",
-                "  }  ",
-                "}");
-
-            return await QueryHslGraphApiAsync<TimetableModel.Timetable, HslApiResponse>(
-                query,
+            => await QueryHslGraphApiAsync(
+                TimetableQuery(stop),
                 response => response.Data.Stop.ToDepartureTimetable(),
                 cancellationToken);
-        }
 
         public async Task<TimetableModel.Timetable> GetArrivalEstimatesAsync(
             string stop, CancellationToken cancellationToken)
-        {
-            string query = String.Join(
-                Environment.NewLine,
-                "{",
-                "  stop(id: \"" + stop + "\") {",
-                "    name",
-                "    gtfsId",
-                "    stoptimesWithoutPatterns {",
-                "      scheduledArrival",
-                "      realtimeArrival",
-                "      arrivalDelay",
-                "      scheduledDeparture",
-                "      realtimeDeparture",
-                "      departureDelay",
-                "      realtime",
-                "      realtimeState",
-                "      serviceDay",
-                "      headsign",
-                "      trip {",
-                "        routeShortName",
-                "        directionId",
-                "        route {",
-                "          longName",
-                "        }",
-                "      }",
-                "    }",
-                "  }  ",
-                "}");
-
-            return await QueryHslGraphApiAsync<TimetableModel.Timetable, HslApiResponse>(
-                query,
+            => await QueryHslGraphApiAsync(
+                TimetableQuery(stop),
                 response => response.Data.Stop.ToArrivalTimetable(),
                 cancellationToken);
-        }
 
-        public async Task<TimetableModel.Stop> GetStopByIdAsync(string id, CancellationToken cancellationToken)
-        {
-            var query = String.Join(
-                Environment.NewLine,
-                "{",
-                "  stop(id: \"" + id + "\") {",
-                "    gtfsId",
-                "    name",
-                "    routes {",
-                "      shortName",
-                "      longName",
-                "    }",
-                "  }",
-                "}");
-
-            return await QueryHslGraphApiAsync<TimetableModel.Stop, HslApiResponse>(
-                query,
+        public async Task<TimetableModel.Stop> GetStopByIdAsync(
+            string id, CancellationToken cancellationToken)
+            => await QueryHslGraphApiAsync(
+                string.Join(Environment.NewLine,
+                    "{",
+                    "  stop(id: \"" + id + "\") {",
+                    "    gtfsId",
+                    "    name",
+                    "    routes {",
+                    "      shortName",
+                    "      longName",
+                    "    }",
+                    "  }",
+                    "}"),
                 response => response.Data.Stop.ToStop(),
                 cancellationToken
             );
-        }
 
-        public async Task<TimetableModel.Stop[]> SearchStopsAsync(string search, CancellationToken cancellationToken)
-        {
-            var query = String.Join(
-                Environment.NewLine,
-                "{",
-                "  stops(name: \"" + search + "\") {",
-                "    gtfsId",
-                "    name",
-                "    routes {",
-                "      shortName",
-                "      longName",
-                "    }",
-                "  }",
-                "}");
-
-            return await QueryHslGraphApiAsync<TimetableModel.Stop[], HslApiResponse>(
-                query,
+        public async Task<TimetableModel.Stop[]> SearchStopsAsync(
+            string search, CancellationToken cancellationToken)
+            => await QueryHslGraphApiAsync(
+                string.Join(Environment.NewLine,
+                    "{",
+                    "  stops(name: \"" + search + "\") {",
+                    "    gtfsId",
+                    "    name",
+                    "    routes {",
+                    "      shortName",
+                    "      longName",
+                    "    }",
+                    "  }",
+                    "}"),
                 response => response.Data.Stops.ToStops(),
-                cancellationToken
-            );
-        }
+                cancellationToken);
 
-        // T is return type.
-        // R is type the graph api response is deserialized to before transformation.
-        // T transform(R) is function to transform API response to return type.
-        private async Task<T> QueryHslGraphApiAsync<T, R>(string query, Func<R, T> transform, CancellationToken cancellationToken)
+        /// <summary>
+        /// Query HSL graph API and map response to internal model
+        /// </summary>
+        /// <typeparam name="T">Response type</typeparam>
+        /// <param name="query">Graph API query</param>
+        /// <param name="transform">Transformation function from graph API response to desired type</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Transformed response</returns>
+        private async Task<T> QueryHslGraphApiAsync<T>(
+            string query, Func<HslApiResponse, T> transform, CancellationToken cancellationToken)
         {
             var responseMessage = await _httpClient.PostStreamAsync(
                 query,
@@ -155,9 +86,37 @@ namespace TransportDisplay.API.Clients
 
             using (var contentStream = await responseMessage.Content.ReadAsStreamAsync())
             {
-                var response = await contentStream.DeserializeResponseStream<R>(cancellationToken);
+                var response = await contentStream.DeserializeResponseStream<HslApiResponse>(cancellationToken);
                 return transform(response);
             }
         }
+
+        private static string TimetableQuery(string stop)
+            => string.Join(Environment.NewLine,
+                "{",
+                "  stop(id: \"" + stop + "\") {",
+                "    name",
+                "    gtfsId",
+                "    stoptimesWithoutPatterns {",
+                "      scheduledArrival",
+                "      realtimeArrival",
+                "      arrivalDelay",
+                "      scheduledDeparture",
+                "      realtimeDeparture",
+                "      departureDelay",
+                "      realtime",
+                "      realtimeState",
+                "      serviceDay",
+                "      headsign",
+                "      trip {",
+                "        routeShortName",
+                "        directionId",
+                "        route {",
+                "          longName",
+                "        }",
+                "      }",
+                "    }",
+                "  }  ",
+                "}");
     }
 }
