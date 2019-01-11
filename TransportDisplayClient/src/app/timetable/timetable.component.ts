@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Timetable } from '../timetable';
+import { Component, OnInit, Input } from '@angular/core';
+import { Timetable, DisplayType } from '../timetable';
 import { TimetableService } from '../timetable.service';
 
 @Component({
@@ -9,24 +9,42 @@ import { TimetableService } from '../timetable.service';
 })
 export class TimetableComponent implements OnInit {
 
-  timetable: Timetable;
-  arrivalEltimates: Timetable;
-  stopId = 'HSL:2314601';
+  @Input()
+  stopId: string;
 
-  getTimetable(stopId: string): void {
-    this.timetableService.getTimetable(stopId)
-      .subscribe(timetable => this.timetable = timetable);
+  @Input()
+  type: DisplayType;
+
+  timetable: Timetable;
+
+  onTypeChange() {
+    if (this.type == DisplayType.DEPARTURES) {
+      this.getData(this.stopId);
+    } else if (this.type == DisplayType.ARRIVALS) {
+      this.getData(this.stopId);
+    }
   }
 
-  getArrivalEstimates(stopId: string): void {
-    this.timetableService.getArrivals(stopId)
-      .subscribe(timetable => this.arrivalEltimates = timetable);
+  getData(stopId: string): void {
+    if (this.type === DisplayType.DEPARTURES) {
+      this.timetableService.getTimetable(stopId)
+        .subscribe(timetable => {
+          this.timetable = timetable;
+          this.timetable.displayType = DisplayType.DEPARTURES;
+        });
+    } else if (this.type === DisplayType.ARRIVALS) {
+      this.timetableService.getArrivals(stopId)
+        .subscribe(timetable => {
+          this.timetable = timetable;
+          this.timetable.displayType = DisplayType.ARRIVALS;
+        });
+    }
   }
 
   constructor(private timetableService: TimetableService) { }
 
   ngOnInit() {
-    this.getTimetable(this.stopId);
+    this.getData(this.stopId);
   }
 
 }

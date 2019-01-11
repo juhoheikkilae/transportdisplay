@@ -4,4 +4,6 @@
     Welcome to {{ title }}!
   </h1>
 </div>
-<app-timetable></app-timetable>
+<div *ngFor='let conf of config.timetableConfigs'>
+  <app-timetable [stopId]="conf.stopId" [type]="conf.displayType"></app-timetable>
+</div>

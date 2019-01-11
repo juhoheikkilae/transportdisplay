@@ -1,0 +1,118 @@
+{
+    "data": {
+      "stops": [
+        {
+          "gtfsId": "HSL:2314601",
+          "name": "Matinkylä",
+          "routes": [
+            {
+              "shortName": "M1",
+              "longName": "Matinkylä - Vuosaari"
+            }
+          ]
+        },
+        {
+          "gtfsId": "HSL:2314602",
+          "name": "Matinkylä",
+          "routes": [
+            {
+              "shortName": "M1",
+              "longName": "Matinkylä - Vuosaari"
+            }
+          ]
+        },
+        {
+          "gtfsId": "HSL:2313215",
+          "name": "Matinkylän terv.as.",
+          "routes": [
+            {
+              "shortName": "137",
+              "longName": "Tynnyripuisto-Matinkallio-Piispankylä-Kuitinmäki"
+            }
+          ]
+        },
+        {
+          "gtfsId": "HSL:2314210",
+          "name": "Matinkylä (M)",
+          "routes": [
+            {
+              "shortName": "112",
+              "longName": "Tapiola (M)-Niittykumpu-Haukilahti-Matinkylä (M)"
+            },
+            {
+              "shortName": "138",
+              "longName": "Tynnyripuisto-Nuottaniemi-Matinkallio"
+            },
+            {
+              "shortName": "137",
+              "longName": "Tynnyripuisto-Matinkallio-Piispankylä-Kuitinmäki"
+            }
+          ]
+        },
+        {
+          "gtfsId": "HSL:2314212",
+          "name": "Matinkylä (M)",
+          "routes": [
+            {
+              "shortName": "136",
+              "longName": "Matinkylä(M)-Espoon keskus-Suna-Tuomarila"
+            }
+          ]
+        },
+        {
+          "gtfsId": "HSL:2314211",
+          "name": "Matinkylä (M)",
+          "routes": [
+            {
+              "shortName": "134",
+              "longName": "Matinkylä(M)-Espoon keskus-Suvela-Tuomarila"
+            }
+          ]
+        },
+        {
+          "gtfsId": "HSL:2314214",
+          "name": "Matinkylä (M)",
+          "routes": [
+            {
+              "shortName": "147",
+              "longName": "Matinkylä (M)-Iivisniemi-Soukka-Laurinlahti-Kivenlahti"
+            }
+          ]
+        },
+        {
+          "gtfsId": "HSL:2314213",
+          "name": "Matinkylä (M)",
+          "routes": [
+            {
+              "shortName": "145",
+              "longName": "Matinkylä (M)-Soukka-Suvisaaristo"
+            },
+            {
+              "shortName": "143",
+              "longName": "Matinkylä (M)-Soukanniemi"
+            }
+          ]
+        },
+        {
+          "gtfsId": "HSL:2314216",
+          "name": "Matinkylä (M)",
+          "routes": [
+            {
+              "shortName": "159",
+              "longName": "Matinkylä (M)-Latokaski"
+            }
+          ]
+        },
+        {
+          "gtfsId": "HSL:2314215",
+          "name": "Matinkylä (M)",
+          "routes": [
+            {
+              "shortName": "146",
+              "longName": "Matinkylä (M)-Espoonlahti-Kivenlahti"
+            }
+          ]
+        }
+      ]
+    }
+  }

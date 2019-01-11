@@ -20,14 +20,14 @@ namespace TransportDisplay.API.Clients
         public async Task<TimetableModel.Timetable> GetTimetableAsync(
             string stop, CancellationToken cancellationToken)
             => await QueryHslGraphApiAsync(
-                TimetableQuery(stop),
+                BuildTimetableQuery(stop),
                 response => response.Data.Stop.ToDepartureTimetable(),
                 cancellationToken);
 
         public async Task<TimetableModel.Timetable> GetArrivalEstimatesAsync(
             string stop, CancellationToken cancellationToken)
             => await QueryHslGraphApiAsync(
-                TimetableQuery(stop),
+                BuildTimetableQuery(stop),
                 response => response.Data.Stop.ToArrivalTimetable(),
                 cancellationToken);
 
@@ -66,32 +66,7 @@ namespace TransportDisplay.API.Clients
                 response => response.Data.Stops.ToStops(),
                 cancellationToken);
 
-        /// <summary>
-        /// Query HSL graph API and map response to internal model
-        /// </summary>
-        /// <typeparam name="T">Response type</typeparam>
-        /// <param name="query">Graph API query</param>
-        /// <param name="transform">Transformation function from graph API response to desired type</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Transformed response</returns>
-        private async Task<T> QueryHslGraphApiAsync<T>(
-            string query, Func<HslApiResponse, T> transform, CancellationToken cancellationToken)
-        {
-            var responseMessage = await _httpClient.PostStreamAsync(
-                query,
-                Constants.TransportApiBaseUri,
-                "application/graphql",
-                cancellationToken
-            );
-
-            using (var contentStream = await responseMessage.Content.ReadAsStreamAsync())
-            {
-                var response = await contentStream.DeserializeResponseStream<HslApiResponse>(cancellationToken);
-                return transform(response);
-            }
-        }
-
-        private static string TimetableQuery(string stop)
+        private static string BuildTimetableQuery(string stop)
             => string.Join(Environment.NewLine,
                 "{",
                 "  stop(id: \"" + stop + "\") {",
@@ -118,5 +93,29 @@ namespace TransportDisplay.API.Clients
                 "    }",
                 "  }  ",
                 "}");
+
+        /// <summary>
+        /// Query HSL graph API and map response to internal model
+        /// </summary>
+        /// <typeparam name="T">Response type</typeparam>
+        /// <param name="query">Graph API query</param>
+        /// <param name="transform">Transformation function from graph API response to desired type</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Transformed response</returns>
+        private async Task<T> QueryHslGraphApiAsync<T>(
+            string query, Func<HslApiResponse, T> transform, CancellationToken cancellationToken)
+        {
+            var responseMessage = await _httpClient.PostStreamAsync(
+                query,
+                Constants.TransportApiUri,
+                "application/graphql",
+                cancellationToken
+            );
+
+            using (var contentStream = await responseMessage.Content.ReadAsStreamAsync())
+            {
+                return transform(contentStream.DeserializeResponseStream<HslApiResponse>(cancellationToken));
+            }
+        }
     }
 }

@@ -45,8 +45,12 @@ namespace TransportDisplay.API.Clients
             => new TimetableModel.Line
             {
                 Id = trip.RouteShortName,
-                Origin = trip.Route.LongName.Split('-')[0].Trim(),
-                Destination = trip.Route.LongName.Split('-')[trip.Route.LongName.Split('-').Length - 1].Trim(),
+                Origin = trip.Route != null
+                    ? trip.Route.LongName.Split('-')[0].Trim()
+                    : null,
+                Destination = trip.Route != null
+                    ? trip.Route.LongName.Split('-')[trip.Route.LongName.Split('-').Length - 1].Trim()
+                    : null,
                 Direction = trip.DirectionId == 0 ? TimetableModel.Direction.NORMAL : TimetableModel.Direction.REVERSED
             };
 

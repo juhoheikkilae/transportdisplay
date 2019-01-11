@@ -1,0 +1,109 @@
+{
+    "data": {
+      "stop": {
+        "name": "Piispansilta",
+        "stoptimesWithoutPatterns": [
+          {
+            "scheduledArrival": 83940,
+            "realtimeArrival": 83940,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 83940,
+            "realtimeDeparture": 83940,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1547071200,
+            "headsign": "Kamppi",
+            "trip": {
+              "routeShortName": "147N",
+              "id": "VHJpcDpIU0w6MjE0N05fMjAxOTAxMDlfVG9fMl8yMzAz",
+              "directionId": "1",
+              "route": {
+                "longName": "Kamppi-Kivenlahti"
+              }
+            }
+          },
+          {
+            "scheduledArrival": 84900,
+            "realtimeArrival": 84900,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 84900,
+            "realtimeDeparture": 84900,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1547071200,
+            "headsign": "Kamppi",
+            "trip": {
+              "routeShortName": "165N",
+              "id": "VHJpcDpIU0w6MjE2NU5fMjAxOTAxMDlfVG9fMl8yMzA2",
+              "directionId": "1",
+              "route": {
+                "longName": "Kamppi-Saunalahti-Kauklahti"
+              }
+            }
+          },
+          {
+            "scheduledArrival": 85140,
+            "realtimeArrival": 85140,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 85140,
+            "realtimeDeparture": 85140,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1547071200,
+            "headsign": "Kamppi",
+            "trip": {
+              "routeShortName": "147N",
+              "id": "VHJpcDpIU0w6MjE0N05fMjAxOTAxMDlfVG9fMl8yMzIz",
+              "directionId": "1",
+              "route": {
+                "longName": "Kamppi-Kivenlahti"
+              }
+            }
+          },
+          {
+            "scheduledArrival": 85740,
+            "realtimeArrival": 85740,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 85740,
+            "realtimeDeparture": 85740,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1547071200,
+            "headsign": "Kamppi",
+            "trip": {
+              "routeShortName": "146N",
+              "id": "VHJpcDpIU0w6MjE0Nk5fMjAxOTAxMDlfVG9fMl8yMzMz",
+              "directionId": "1",
+              "route": {
+                "longName": "Kamppi-Kivenlahti-Saunalahti"
+              }
+            }
+          },
+          {
+            "scheduledArrival": 86580,
+            "realtimeArrival": 86580,
+            "arrivalDelay": 0,
+            "scheduledDeparture": 86580,
+            "realtimeDeparture": 86580,
+            "departureDelay": 0,
+            "realtime": false,
+            "realtimeState": "SCHEDULED",
+            "serviceDay": 1547071200,
+            "headsign": "Kamppi",
+            "trip": {
+              "routeShortName": "173N",
+              "id": "VHJpcDpIU0w6NjE3M05fMjAxOTAxMDlfVG9fMl8yMjU1",
+              "directionId": "1",
+              "route": {
+                "longName": "Kamppi-Masala-Kirkkonummi-Upinniemi"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }

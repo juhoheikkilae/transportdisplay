@@ -15,8 +15,7 @@ export class TimetableService {
   }
 
   getArrivals(id: string): Observable<Timetable> {
-    const response = this.http.get<Timetable>(encodeURI(environment.apiUrl + '/timetable/scheduleddepartures?stop=' + id));
-    return response;
+    return this.http.get<Timetable>(encodeURI(environment.apiUrl + '/timetable/arrivals?stop=' + id));
   }
 
   getStops(search: string): Observable<Timetable> {

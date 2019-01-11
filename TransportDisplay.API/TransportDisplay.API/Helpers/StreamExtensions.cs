@@ -8,11 +8,11 @@ namespace TransportDisplay.API.Helpers
 {
     public static class HttpResponseExtensions
     {
-        public static Task<T> DeserializeResponseStream<T>(
+        public static T DeserializeResponseStream<T>(
             this Stream responseStream, CancellationToken cancellationToken)
         {
             if (!cancellationToken.IsCancellationRequested)
-                return Task.Run(() => DeserializeJsonFromStream<T>(responseStream));
+                return DeserializeJsonFromStream<T>(responseStream);
 
             throw new TaskCanceledException();
         }

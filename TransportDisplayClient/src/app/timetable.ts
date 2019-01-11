@@ -2,6 +2,7 @@ export class Timetable {
     stop: Stop;
     departures: Departure[];
     arrivalEstimates: ArrivalEstimate[];
+    displayType: DisplayType;
 }
 
 export class Stop {
@@ -25,4 +26,9 @@ export class ArrivalEstimate {
     line: Line;
     arrivesIn: number;
     isRealTimeEstimate: boolean;
+}
+
+export enum DisplayType {
+    DEPARTURES = 0,
+    ARRIVALS = 1
 }

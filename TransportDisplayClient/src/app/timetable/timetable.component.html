@@ -1,10 +1,24 @@
 <div *ngIf="timetable">
   <h2>Timetable</h2>
   <h3>{{ timetable.stop.name }}</h3>
+  <div>
+    <label>Type:
+      <input [(ngModel)]="type" placeholder="type" />
+    </label>
+  </div>
   <ul>
-    <li *ngFor="let departure of timetable.departures">
-      <span>Line:</span> {{ departure.line.id }}
-      <span>Time:</span> {{ departure.time }}
-    </li>
+    <div *ngIf="timetable.displayType === 0">
+      <li *ngFor="let departure of timetable.departures">
+        <span>Line:</span> {{ departure.line.id }}
+        <span>Departure:</span> {{ departure.time }}
+      </li>
+    </div>
+    <div *ngIf="timetable.displayType === 1">
+      <li *ngFor="let arrival of timetable.arrivalEstimates">
+        <span>Line:</span> {{ arrival.line.id }}
+        <span>Arrives in:</span> {{ arrival.arrivesIn }}
+        <span>Realtime:</span> {{ arrival.isRealTimeEstimate }}
+      </li>
+    </div>
   </ul>
 </div>
