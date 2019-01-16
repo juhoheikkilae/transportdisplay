@@ -17,6 +17,7 @@ namespace TransportDisplayApiTests
         private static HttpClient _httpClient = new HttpClient();
         private string exampleStop = "HSL:2314601";
         private string exampleSearch = "Mati";
+        private string openWeatherMapLocationId = "660158";
 
         [Fact]
         public async Task ShouldReturnTimetable()

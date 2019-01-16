@@ -30,4 +30,10 @@ namespace TransportDisplay.API.Clients
         Task Disconnect();
         Task Subscribe(string topic);
     }
+
+    public interface IWeatherClient
+    {
+        Task<WeatherModel.Conditions> GetConditionsAsync(
+            string id, CancellationToken cancellationToken);
+    }
 }

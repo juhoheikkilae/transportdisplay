@@ -40,8 +40,17 @@ namespace TransportDisplay.API
 
             // Use HSL graph API to fetch timetable information
             services.AddSingleton<ITimetableClient>(
-                s => new HslTimetableClient(new HttpClient()));
+                s => new HslTimetableClient(new HttpClient())
+            );
+
             services.AddSingleton<ITimetableService, TimetableService>();
+
+            // Get OpenWeatherMap API key from secrets store
+            services.AddSingleton<IWeatherClient>(
+                s => new WeatherClient(
+                    new HttpClient(),
+                    Configuration["Weather:ApiKey"])
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

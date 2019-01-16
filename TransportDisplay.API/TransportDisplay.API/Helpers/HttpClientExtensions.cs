@@ -12,6 +12,58 @@ namespace TransportDisplay.API.Helpers
 {
     public static class HttpClientExtensions
     {
+        /// <summary>
+        /// Query API and map response to internal model
+        /// </summary>
+        /// <typeparam name="T">Response type</typeparam>
+        /// <typeparam name="R">API response type</typeparam>
+        /// <param name="uri">API Uri</param>
+        /// <param name="transform">Transformation function from graph API response to desired type</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Transformed response</returns>
+        public static async Task<T> ApiGetAsync<T, R>(
+            this HttpClient client, string uri, Func<R, T> transform, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            using (var request = new HttpRequestMessage(HttpMethod.Get, uri))
+            using (var response = await client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
+            {
+                response.EnsureSuccessStatusCode();
+
+                using (var responseStream = await response.Content.ReadAsStreamAsync())
+                {
+                    return transform(responseStream.DeserializeResponseStream<R>(cancellationToken));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Query API and map response to internal model
+        /// </summary>
+        /// <typeparam name="T">Response type</typeparam>
+        /// <typeparam name="R">API response type</typeparam>
+        /// <param name="query">Graph API query</param>
+        /// <param name="uri">API Uri</param>
+        /// <param name="transform">Transformation function from graph API response to desired type</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Transformed response</returns>
+        public static async Task<T> ApiPostAsync<T, R>(
+            this HttpClient client, string uri, string query, string contentType, Func<R, T> transform, CancellationToken cancellationToken)
+        {
+            var responseMessage = await client.PostStreamAsync(
+                query,
+                uri,
+                contentType,
+                cancellationToken
+            );
+
+            using (var contentStream = await responseMessage.Content.ReadAsStreamAsync())
+            {
+                return transform(contentStream.DeserializeResponseStream<R>(cancellationToken));
+            }
+        }
+
         public static async Task<HttpResponseMessage> PostStreamAsync(
             this HttpClient httpClient, object content, string url, string contentType, CancellationToken cancellationToken)
         {
@@ -27,7 +79,7 @@ namespace TransportDisplay.API.Helpers
                     HttpCompletionOption.ResponseHeadersRead,
                     cancellationToken
                 );
-                
+
                 resp.EnsureSuccessStatusCode();
                 return resp;
             }

@@ -104,18 +104,12 @@ namespace TransportDisplay.API.Clients
         /// <returns>Transformed response</returns>
         private async Task<T> QueryHslGraphApiAsync<T>(
             string query, Func<HslApiResponse, T> transform, CancellationToken cancellationToken)
-        {
-            var responseMessage = await _httpClient.PostStreamAsync(
-                query,
-                Constants.TransportApiUri,
-                "application/graphql",
-                cancellationToken
-            );
-
-            using (var contentStream = await responseMessage.Content.ReadAsStreamAsync())
-            {
-                return transform(contentStream.DeserializeResponseStream<HslApiResponse>(cancellationToken));
-            }
-        }
+                => await _httpClient.ApiPostAsync<T, HslApiResponse>(
+                    query,
+                    Constants.TransportApiUri,
+                    "application/graphql",
+                    transform,
+                    cancellationToken
+                );
     }
 }
