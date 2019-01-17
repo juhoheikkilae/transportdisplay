@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using TransportDisplay.API.Controllers;
 using TransportDisplay.API.Services;
 using TransportDisplay.API.Logger;
@@ -14,42 +15,67 @@ namespace TransportDisplayApiTests
 {
     public class E2E
     {
-        private static HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient;
+
+        private readonly ITimetableClient _timetableClient;
+        private readonly ITimetableService _timetableService;
+        private readonly ITimetableController _timetableController;
+        
+        private readonly IWeatherClient _weatherClient;
+        private readonly IWeatherService _weatherService;
+        private readonly IWeatherController _weatherController;
+
         private string exampleStop = "HSL:2314601";
         private string exampleSearch = "Mati";
         private string openWeatherMapLocationId = "660158";
 
+        IConfiguration Configuration { get; set; }
+
+        public E2E()
+        {
+            var builder = new ConfigurationBuilder()
+                .AddUserSecrets<E2E>();
+
+            Configuration = builder.Build();
+
+            _httpClient = new HttpClient();
+            
+            _timetableClient = new HslTimetableClient(_httpClient);
+            _timetableService = new TimetableService(_timetableClient);
+            _timetableController = new TimetableController(_timetableService);
+
+            _weatherClient = new WeatherClient(_httpClient, Configuration["Weather:ApiKey"]);
+            _weatherService = new WeatherService(_weatherClient);
+            _weatherController = new WeatherController(_weatherService);
+        }
+
         [Fact]
         public async Task ShouldReturnTimetable()
         {
-            var hslClient = new HslTimetableClient(_httpClient);
-            var timetableService = new TimetableService(hslClient);
-            var timetableController = new TimetableController(timetableService);
-
-            var result = await timetableController.ScheduledDepartures(exampleStop, CancellationToken.None);
+            var result = await _timetableController.ScheduledDepartures(exampleStop, CancellationToken.None);
             Assert.IsType<ActionResult<TimetableModel.Timetable>>(result);
         }
 
         [Fact]
         public async Task ShouldReturnStops()
         {
-            var hslClient = new HslTimetableClient(_httpClient);
-            var timetableService = new TimetableService(hslClient);
-            var timetableController = new TimetableController(timetableService);
-
-            var result = await timetableController.Stops(exampleSearch, CancellationToken.None);
+            var result = await _timetableController.Stops(exampleSearch, CancellationToken.None);
             Assert.IsType<ActionResult<TimetableModel.Stop[]>>(result);
         }
 
         [Fact]
         public async Task ShouldReturnArrivals()
         {
-            var hslClient = new HslTimetableClient(_httpClient);
-            var timetableService = new TimetableService(hslClient);
-            var timetableController = new TimetableController(timetableService);
-
-            var result = await timetableController.Arrivals(exampleStop, CancellationToken.None);
+            var result = await _timetableController.Arrivals(exampleStop, CancellationToken.None);
             Assert.IsType<ActionResult<TimetableModel.Timetable>>(result);
+        }
+
+        [Fact]
+        public async Task ShouldFetchWeatherConditions()
+        {
+            Assert.IsType<ActionResult<WeatherModel.Conditions>>(
+                await _weatherController.Conditions(openWeatherMapLocationId, CancellationToken.None)
+            );
         }
     }
 }

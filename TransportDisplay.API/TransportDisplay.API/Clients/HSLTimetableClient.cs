@@ -105,8 +105,8 @@ namespace TransportDisplay.API.Clients
         private async Task<T> QueryHslGraphApiAsync<T>(
             string query, Func<HslApiResponse, T> transform, CancellationToken cancellationToken)
                 => await _httpClient.ApiPostAsync<T, HslApiResponse>(
-                    query,
                     Constants.TransportApiUri,
+                    query,
                     "application/graphql",
                     transform,
                     cancellationToken

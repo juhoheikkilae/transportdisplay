@@ -51,6 +51,8 @@ namespace TransportDisplay.API
                     new HttpClient(),
                     Configuration["Weather:ApiKey"])
             );
+
+            services.AddSingleton<IWeatherService, WeatherService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

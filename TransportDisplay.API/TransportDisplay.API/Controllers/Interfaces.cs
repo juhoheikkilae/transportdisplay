@@ -12,4 +12,9 @@ namespace TransportDisplay.API.Controllers
         Task<ActionResult<TimetableModel.Timetable>> Arrivals(string stop, CancellationToken cancellationToken);
         Task<ActionResult<TimetableModel.Stop[]>> Stops(string search, CancellationToken cancellationToken);
     }
+
+    public interface IWeatherController
+    {
+        Task<ActionResult<WeatherModel.Conditions>> Conditions(string id, CancellationToken cancellationToken);
+    }
 }
