@@ -1,9 +1,11 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div>
   <h1>
-    Welcome to {{ title }}!
+    {{ title }}
   </h1>
 </div>
 <div *ngFor='let conf of config.timetableConfigs'>
   <app-timetable [stopId]="conf.stopId" [type]="conf.displayType"></app-timetable>
+</div>
+<div>
+  <app-weather [locationId]="660158"></app-weather>
 </div>

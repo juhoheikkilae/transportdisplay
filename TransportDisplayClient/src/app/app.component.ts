@@ -7,7 +7,7 @@ import { DisplayType } from './timetable';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'TransportDisplayClient';
+  title = 'Placeholder title';
   config: AppConfig = {
     timetableConfigs: [
       {

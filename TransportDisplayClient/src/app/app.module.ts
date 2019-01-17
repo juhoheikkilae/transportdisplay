@@ -5,11 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { TimetableComponent } from './timetable/timetable.component';
+import { WeatherComponent } from './weather/weather.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TimetableComponent
+    TimetableComponent,
+    WeatherComponent
   ],
   imports: [
     BrowserModule,
