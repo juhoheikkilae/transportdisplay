@@ -1,10 +1,4 @@
-<div>
+<div *ngIf="conditions">
   <h2>Weather</h2>
-  <h3>{{ conditions.place }}</h3>
-  <div>
-    <span>Temperature:</span> {{ conditions.temperature }}
-  </div>
-  <div>
-    <span>Conditions:</span> {{ conditions.description | uppercase }}
-  </div>
+  <h3>{{ conditions.place }} {{ conditions.temperature }} °C, {{ conditions.description }}</h3>
 </div>

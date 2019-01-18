@@ -17,7 +17,7 @@ export class TimetableComponent implements OnInit {
 
   timetable: Timetable;
 
-  onTypeChange() {
+  onTypeChange(): void {
     if (this.type == DisplayType.DEPARTURES) {
       this.getData(this.stopId);
     } else if (this.type == DisplayType.ARRIVALS) {

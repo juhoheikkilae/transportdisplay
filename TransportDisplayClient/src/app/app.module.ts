@@ -6,12 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { TimetableComponent } from './timetable/timetable.component';
 import { WeatherComponent } from './weather/weather.component';
+import { StopFinderComponent } from './stop-finder/stop-finder.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TimetableComponent,
-    WeatherComponent
+    WeatherComponent,
+    StopFinderComponent
   ],
   imports: [
     BrowserModule,

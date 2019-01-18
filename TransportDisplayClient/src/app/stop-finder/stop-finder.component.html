@@ -1,0 +1,11 @@
+<div>
+ <h2>Search stops</h2>
+ <label>Search
+   <input type="text" (input)="onTextChange($event.target.value)" placeholder="search" />
+ </label>
+ <ul *ngIf="stops">
+  <li *ngFor="let stop of stops">
+    <div>{{stop.name}}</div>
+  </li>
+ </ul>
+</div>

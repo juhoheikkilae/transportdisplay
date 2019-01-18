@@ -3,6 +3,9 @@
     {{ title }}
   </h1>
 </div>
+<div>
+  <app-stop-finder></app-stop-finder>
+</div>
 <div *ngFor='let conf of config.timetableConfigs'>
   <app-timetable [stopId]="conf.stopId" [type]="conf.displayType"></app-timetable>
 </div>
