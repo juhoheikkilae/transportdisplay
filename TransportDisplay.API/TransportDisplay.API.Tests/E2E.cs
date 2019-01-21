@@ -72,10 +72,16 @@ namespace TransportDisplayApiTests
 
         [Fact]
         public async Task ShouldFetchWeatherConditions()
+        {            
+            var result = await _weatherController.Conditions(openWeatherMapLocationId, CancellationToken.None);
+            Assert.IsType<ActionResult<WeatherModel.Conditions>>(result);
+        }
+
+        [Fact]
+        public async Task ShouldFetchCurrentAlerts()
         {
-            Assert.IsType<ActionResult<WeatherModel.Conditions>>(
-                await _weatherController.Conditions(openWeatherMapLocationId, CancellationToken.None)
-            );
+            var result = await _timetableController.Alerts(CancellationToken.None);
+            Assert.IsType<ActionResult<TimetableModel.Alert[]>>(result);
         }
     }
 }

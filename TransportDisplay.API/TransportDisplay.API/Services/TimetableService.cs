@@ -21,5 +21,8 @@ namespace TransportDisplay.API.Services
 
         public async Task<Stop[]> SearchStopsAsync(string search, CancellationToken cancellationToken)
             => await _timetableClient.SearchStopsAsync(search, cancellationToken);
+
+        public async Task<Alert[]> FetchCurrentAlertsAsync(CancellationToken cancellationToken)
+            => await _timetableClient.GetCurrentAlertsAsync(cancellationToken);
     }
 }

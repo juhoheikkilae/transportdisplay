@@ -13,7 +13,7 @@ export class StopFinderService {
     if (search !== undefined && search.length > 0) {
       return this.http.get<Stop[]>(encodeURI(`${environment.apiUrl}/timetable/stops?search=${search}`));
     } else {
-      let response:Stop[];
+      const response: Stop[] = [];
       return of(response);
     }
   }

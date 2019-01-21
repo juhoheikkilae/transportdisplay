@@ -39,5 +39,11 @@ namespace TransportDisplay.API.Controllers
         {
             return await _timetableService.SearchStopsAsync(search, cancellationToken);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<TimetableModel.Alert[]>> Alerts(CancellationToken cancellationToken)
+        {
+            return await _timetableService.FetchCurrentAlertsAsync(cancellationToken);
+        }
     }
 }

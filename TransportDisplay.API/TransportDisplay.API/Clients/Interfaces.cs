@@ -18,6 +18,9 @@ namespace TransportDisplay.API.Clients
 
         Task<TimetableModel.Stop[]> SearchStopsAsync(
             string search, CancellationToken cancellationToken);
+
+        Task<TimetableModel.Alert[]> GetCurrentAlertsAsync(
+            CancellationToken cancellationToken);
     }
 
     // TODO: Interface should describe methods to subscribe

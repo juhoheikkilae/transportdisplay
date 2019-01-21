@@ -66,5 +66,18 @@ namespace TransportDisplay.API.Clients
                     Origin = r.LongName.Split('-')[0]
                 }).ToArray() : null
             };
+
+        internal static TimetableModel.Alert[] ToAlerts(this Alert[] alerts)
+            => alerts.Select(
+                a => new TimetableModel.Alert {
+                    Line = new TimetableModel.Line {
+                        Id = a.Route.ShortName,
+                        Name = a.Route.LongName
+                    },
+                    AlertText = a.AlertDescriptionText,
+                    From = DateTimeHelpers.FromUnixTime(a.EffectiveStartDate),
+                    To = DateTimeHelpers.FromUnixTime(a.EffectiveEndDate)
+                }
+            ).ToArray();
     }
 }

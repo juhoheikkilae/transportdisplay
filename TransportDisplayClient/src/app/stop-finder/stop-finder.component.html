@@ -5,7 +5,12 @@
  </label>
  <ul *ngIf="stops">
   <li *ngFor="let stop of stops">
-    <div>{{stop.name}}</div>
+    <div>{{stop.id}}: {{stop.name}}</div>
+    <ul>
+      <li *ngFor="let line of stop.lines">
+        {{line.id}} {{line.destination}}
+      </li>
+    </ul>
   </li>
  </ul>
 </div>

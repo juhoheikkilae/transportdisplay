@@ -13,14 +13,18 @@ export class StopFinderComponent implements OnInit {
   search: string;
 
   onTextChange(search: string): void {
-    console.log("search text changed!")
     this.getStops(search);
   }
 
   getStops(search: string): void {
-    if (search && search.length > 0) {
-      this.stopfinderService.getStops(search)
-        .subscribe(stops => this.stops = stops);
+    this.stopfinderService.getStops(search)
+      .subscribe(stops => this.stops = stops);
+  }
+
+  clearStops(): void {
+    const stops: number = this.stops.length;
+    for (let i = 0; i < stops; i++) {
+      this.stops.pop();
     }
   }
 

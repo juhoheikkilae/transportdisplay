@@ -11,6 +11,7 @@ namespace TransportDisplay.API.Controllers
         Task<ActionResult<TimetableModel.Timetable>> ScheduledDepartures(string stop, CancellationToken cancellationToken);
         Task<ActionResult<TimetableModel.Timetable>> Arrivals(string stop, CancellationToken cancellationToken);
         Task<ActionResult<TimetableModel.Stop[]>> Stops(string search, CancellationToken cancellationToken);
+        Task<ActionResult<TimetableModel.Alert[]>> Alerts(CancellationToken cancellationToken);
     }
 
     public interface IWeatherController

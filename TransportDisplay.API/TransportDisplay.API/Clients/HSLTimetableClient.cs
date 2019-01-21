@@ -66,6 +66,26 @@ namespace TransportDisplay.API.Clients
                 response => response.Data.Stops.ToStops(),
                 cancellationToken);
 
+        public async Task<TimetableModel.Alert[]> GetCurrentAlertsAsync(
+            CancellationToken cancellationToken)
+            => await QueryHslGraphApiAsync(
+                string.Join(Environment.NewLine,
+                "{",
+                "  alerts {",
+                "    id",
+                "    alertDescriptionText",
+                "    effectiveStartDate",
+                "    effectiveEndDate",
+                "    route {",
+                "      shortName",
+                "      longName",
+                "    }",
+                "  }",
+                "}"),
+                r => r.Data.Alerts.ToAlerts(),
+                cancellationToken
+            );
+
         private static string BuildTimetableQuery(string stop)
             => string.Join(Environment.NewLine,
                 "{",

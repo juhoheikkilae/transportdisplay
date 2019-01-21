@@ -17,6 +17,12 @@ namespace TransportDisplay.API.Clients
 
             [JsonProperty("stops")]
             public Stop[] Stops { get; set; }
+
+            [JsonProperty("routes")]
+            public Route[] Routes { get; set; }
+
+            [JsonProperty("alerts")]
+            public Alert[] Alerts { get; set; }
         }
 
         public partial class Stop
@@ -44,6 +50,9 @@ namespace TransportDisplay.API.Clients
 
             [JsonProperty("trips")]
             public Trip[] Trips { get; set; }
+
+            [JsonProperty("alerts")]
+            public Alert[] Alerts { get; set; }
         }
 
         public partial class StoptimesWithoutPattern
@@ -89,6 +98,24 @@ namespace TransportDisplay.API.Clients
 
             [JsonProperty("directionId")]
             public int DirectionId { get; set; }
+
+            [JsonProperty("route")]
+            public Route Route { get; set; }
+        }
+
+        public partial class Alert
+        {
+            [JsonProperty("id")]
+            public string Id { get; set; }
+
+            [JsonProperty("alertDescriptionText")]
+            public string AlertDescriptionText { get; set; }
+
+            [JsonProperty("effectiveStartDate")]
+            public long EffectiveStartDate { get; set; }
+
+            [JsonProperty("effectiveEndDate")]
+            public long EffectiveEndDate { get; set; }
 
             [JsonProperty("route")]
             public Route Route { get; set; }

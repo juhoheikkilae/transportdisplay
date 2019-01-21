@@ -10,6 +10,7 @@ namespace TransportDisplay.API.Services
         Task<TimetableModel.Timetable> FetchTimetableAsync(string stop, CancellationToken cancellationToken);
         Task<TimetableModel.Timetable> FetchArrivalEstimatesAsync(string stop, CancellationToken cancellationToken);
         Task<TimetableModel.Stop[]> SearchStopsAsync(string search, CancellationToken cancellationToken);
+        Task<TimetableModel.Alert[]> FetchCurrentAlertsAsync(CancellationToken cancellationToken);
     }
 
     public interface IWeatherService

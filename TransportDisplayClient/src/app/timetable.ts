@@ -6,6 +6,7 @@ export class Timetable {
 }
 
 export class Stop {
+  id: string;
   name: string;
   lines: Line[];
 }

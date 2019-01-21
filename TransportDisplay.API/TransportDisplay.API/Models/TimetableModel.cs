@@ -50,6 +50,14 @@ namespace TransportDisplay.API.Models
             public Line[] Lines { get; set; }
         }
 
+        public class Alert
+        {
+            public Line Line { get; set; }
+            public string AlertText { get; set; }
+            public DateTimeOffset From { get; set; }
+            public DateTimeOffset To { get; set; }
+        }
+
         public enum Direction
         {
             NORMAL,
