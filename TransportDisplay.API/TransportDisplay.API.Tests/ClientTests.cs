@@ -46,7 +46,7 @@ namespace TransportDisplayApiTests
 
             using (var httpClient = new HttpClient(handler.Object))
             {
-                var timeTableClient = new HslTimetableClient(httpClient);
+                var timeTableClient = new HslClient(httpClient);
                 var timetable = await timeTableClient.GetTimetableAsync(stopId, CancellationToken.None);
                 Assert.IsType<TimetableModel.Timetable>(timetable);
             }
@@ -62,7 +62,7 @@ namespace TransportDisplayApiTests
 
             using (var httpClient = new HttpClient(handler.Object))
             {
-                var arrivalEstimateClient = new HslTimetableClient(httpClient);
+                var arrivalEstimateClient = new HslClient(httpClient);
                 var estimates = await arrivalEstimateClient.GetArrivalEstimatesAsync(stopId, CancellationToken.None);
                 Assert.IsType<TimetableModel.Timetable>(estimates);
             }
@@ -77,7 +77,7 @@ namespace TransportDisplayApiTests
 
             using (var httpClient = new HttpClient(handler.Object))
             {
-                var client = new HslTimetableClient(httpClient);
+                var client = new HslClient(httpClient);
                 var stops = await client.SearchStopsAsync(search, CancellationToken.None);
                 Assert.IsType<TimetableModel.Stop[]>(stops);
             }
@@ -93,7 +93,7 @@ namespace TransportDisplayApiTests
 
             using (var httpClient = new HttpClient(handler.Object))
             {
-                ITimetableClient client = new HslTimetableClient(httpClient);
+                ITimetableClient client = new HslClient(httpClient);
                 var stop = await client.GetStopByIdAsync(stopId, CancellationToken.None);
                 Assert.IsType<TimetableModel.Stop>(stop);
             }
@@ -106,7 +106,7 @@ namespace TransportDisplayApiTests
 
             using (var httpClient = new HttpClient(handler.Object))
             {
-                ITimetableClient client = new HslTimetableClient(httpClient);
+                ITimetableClient client = new HslClient(httpClient);
                 var alerts = await client.GetCurrentAlertsAsync(CancellationToken.None);
                 Assert.IsType<TimetableModel.Alert[]>(alerts);
             }

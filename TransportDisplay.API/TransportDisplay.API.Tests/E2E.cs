@@ -17,6 +17,9 @@ namespace TransportDisplayApiTests
     {
         private readonly HttpClient _httpClient;
 
+        private readonly IAlertController _alertController;
+        private readonly IAlertService _alertService;
+
         private readonly ITimetableClient _timetableClient;
         private readonly ITimetableService _timetableService;
         private readonly ITimetableController _timetableController;
@@ -40,9 +43,12 @@ namespace TransportDisplayApiTests
 
             _httpClient = new HttpClient();
             
-            _timetableClient = new HslTimetableClient(_httpClient);
+            _timetableClient = new HslClient(_httpClient);
             _timetableService = new TimetableService(_timetableClient);
             _timetableController = new TimetableController(_timetableService);
+
+            _alertService = new AlertService(_timetableClient, null);
+            _alertController = new AlertController(_alertService);
 
             _weatherClient = new WeatherClient(_httpClient, Configuration["Weather:ApiKey"]);
             _weatherService = new WeatherService(_weatherClient);
@@ -80,7 +86,7 @@ namespace TransportDisplayApiTests
         [Fact]
         public async Task ShouldFetchCurrentAlerts()
         {
-            var result = await _timetableController.Alerts(CancellationToken.None);
+            var result = await _alertController.Get(CancellationToken.None);
             Assert.IsType<ActionResult<TimetableModel.Alert[]>>(result);
         }
     }

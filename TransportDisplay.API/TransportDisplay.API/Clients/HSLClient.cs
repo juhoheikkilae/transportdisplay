@@ -9,10 +9,10 @@ using static TransportDisplay.API.Clients.Responses;
 
 namespace TransportDisplay.API.Clients
 {
-    public class HslTimetableClient : ITimetableClient
+    public class HslClient : ITimetableClient
     {
         private readonly HttpClient _httpClient;
-        public HslTimetableClient(HttpClient httpClient)
+        public HslClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

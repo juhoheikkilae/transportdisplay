@@ -5,12 +5,12 @@
     <UserSecretsId>0bd9d0e5-164e-466e-b8cd-42fa71d34d0c</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.1.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.1"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0"/>
     <PackageReference Include="xunit" Version="2.3.1"/>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1"/>
     <PackageReference Include="Moq" Version="4.10.1"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.2.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.1.1"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TransportDisplay.API\TransportDisplay.API.csproj"/>

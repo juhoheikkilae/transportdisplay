@@ -14,6 +14,7 @@ using TransportDisplay.API.Logger;
 using TransportDisplay.API.Services;
 using TransportDisplay.API.Clients;
 using TransportDisplay.API.Settings;
+using TransportDisplay.API.SignalR;
 using System.Net.Http;
 
 namespace TransportDisplay.API
@@ -36,11 +37,12 @@ namespace TransportDisplay.API
                     .AllowAnyMethod()
                     .WithOrigins("http://localhost:4200")));
 
+            services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Use HSL graph API to fetch timetable information
             services.AddSingleton<ITimetableClient>(
-                s => new HslTimetableClient(new HttpClient())
+                s => new HslClient(new HttpClient())
             );
 
             services.AddSingleton<ITimetableService, TimetableService>();
@@ -53,6 +55,8 @@ namespace TransportDisplay.API
             );
 
             services.AddSingleton<IWeatherService, WeatherService>();
+
+            services.AddSingleton<IAlertService, AlertService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +71,8 @@ namespace TransportDisplay.API
             {
                 app.UseHsts();
             }
+
+            app.UseSignalR(routes => routes.MapHub<AlertHub>("/alerthub"));
 
             app.UseHttpsRedirection();
             app.UseMvc();

@@ -29,6 +29,13 @@ export class ArrivalEstimate {
   isRealTimeEstimate: boolean;
 }
 
+export class Alert {
+  line: Line;
+  alertText: string;
+  from: Date;
+  to: Date;
+}
+
 export enum DisplayType {
   DEPARTURES = 0,
   ARRIVALS = 1

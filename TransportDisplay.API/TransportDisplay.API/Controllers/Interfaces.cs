@@ -11,11 +11,15 @@ namespace TransportDisplay.API.Controllers
         Task<ActionResult<TimetableModel.Timetable>> ScheduledDepartures(string stop, CancellationToken cancellationToken);
         Task<ActionResult<TimetableModel.Timetable>> Arrivals(string stop, CancellationToken cancellationToken);
         Task<ActionResult<TimetableModel.Stop[]>> Stops(string search, CancellationToken cancellationToken);
-        Task<ActionResult<TimetableModel.Alert[]>> Alerts(CancellationToken cancellationToken);
     }
 
     public interface IWeatherController
     {
         Task<ActionResult<WeatherModel.Conditions>> Conditions(string id, CancellationToken cancellationToken);
+    }
+
+    public interface IAlertController {
+        Task<ActionResult<TimetableModel.Alert[]>> Get(CancellationToken cancellationToken);
+        Task<ActionResult> Post(TimetableModel.Alert alert, CancellationToken cancellationToken);
     }
 }

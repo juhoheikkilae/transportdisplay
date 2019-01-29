@@ -10,8 +10,7 @@ import { environment } from './../environments/environment';
 export class TimetableService {
 
   getTimetable(id: string): Observable<Timetable> {
-    const response = this.http.get<Timetable>(encodeURI(`${environment.apiUrl}/timetable/scheduleddepartures?stop=${id}`));
-    return response;
+    return this.http.get<Timetable>(encodeURI(`${environment.apiUrl}/timetable/scheduleddepartures?stop=${id}`));
   }
 
   getArrivals(id: string): Observable<Timetable> {
@@ -19,8 +18,7 @@ export class TimetableService {
   }
 
   getStops(search: string): Observable<Timetable> {
-    const response = this.http.get<Timetable>(encodeURI(`${environment.apiUrl}/timetable/stops?search=${search}`));
-    return response;
+    return this.http.get<Timetable>(encodeURI(`${environment.apiUrl}/timetable/stops?search=${search}`));
   }
 
   constructor(private http: HttpClient) {}
