@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DisplayType } from './timetable';
+import { Component } from '@angular/core';
+import { DisplayType } from './models/timetable';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +20,8 @@ export class AppComponent {
       }
     ]
   };
+
+  constructor() {}
 }
 
 class AppConfig {

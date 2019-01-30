@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Timetable, DisplayType } from '../timetable';
-import { TimetableService } from '../timetable.service';
+import { Timetable, DisplayType } from '../../models/timetable';
+import { TimetableService } from '../../services/timetable.service';
 
 @Component({
   selector: 'app-timetable',
@@ -18,9 +18,9 @@ export class TimetableComponent implements OnInit {
   timetable: Timetable;
 
   onTypeChange(): void {
-    if (this.type == DisplayType.DEPARTURES) {
+    if (this.type === DisplayType.DEPARTURES) {
       this.getData(this.stopId);
-    } else if (this.type == DisplayType.ARRIVALS) {
+    } else if (this.type === DisplayType.ARRIVALS) {
       this.getData(this.stopId);
     }
   }

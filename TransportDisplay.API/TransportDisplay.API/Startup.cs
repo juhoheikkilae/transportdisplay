@@ -35,6 +35,7 @@ namespace TransportDisplay.API
                 builder
                     .AllowAnyHeader()
                     .AllowAnyMethod()
+                    .AllowCredentials()
                     .WithOrigins("http://localhost:4200")));
 
             services.AddSignalR();

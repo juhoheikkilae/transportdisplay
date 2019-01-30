@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Timetable } from './timetable';
-import { environment } from './../environments/environment';
+import { Timetable } from '../models/timetable';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

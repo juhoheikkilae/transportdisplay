@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StopFinderService } from '../stop-finder.service';
-import { Stop } from '../timetable';
+import { StopFinderService } from '../../services/stop-finder.service';
+import { Stop } from '../../models/timetable';
 
 @Component({
   selector: 'app-stop-finder',
