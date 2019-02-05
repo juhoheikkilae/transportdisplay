@@ -8,7 +8,7 @@ import { signalRevents } from '../../config';
 })
 export class AlertsService implements OnInit {
 
-  public alert: Alert;
+  public alerts: Alert[];
   private hubConnection: signalR.HubConnection;
 
   public startConnection = () => {
@@ -23,9 +23,22 @@ export class AlertsService implements OnInit {
 
   public addAlertListener = () => {
     this.hubConnection.on(signalRevents.ALERT, (alert: Alert) => {
-      console.log(alert);
-      this.alert = alert;
+      if (this.alerts) {
+        if (!(this.alerts.some(a => a.id === alert.id))) {
+          console.log(alert);
+          this.alerts.push(alert);
+        } else {
+          console.log(`Ignoring existing alert with id ${alert.id}`);
+        }
+      } else {
+        console.log(alert);
+        this.alerts = [ alert ];
+      }
     });
+  }
+
+  public clearAlerts = () => {
+    this.alerts = [];
   }
 
   ngOnInit() { }

@@ -1,8 +1,12 @@
 <div>
-  <div>
-    ALERT
-  </div>
-  <div *ngIf="alertsService.alert">
-    Alert!
+  <h2>
+    Alerts
+  </h2>
+  <div *ngIf="alertsService.alerts && alertsService.alerts.length > 0">
+    <ul>
+      <li *ngFor="let alert of alertsService.alerts">
+        <span>{{ alert.line.id }}</span>: {{ alert.alertText }}
+      </li>
+    </ul>
   </div>
 </div>

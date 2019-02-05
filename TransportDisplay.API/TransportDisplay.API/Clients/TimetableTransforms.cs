@@ -70,6 +70,7 @@ namespace TransportDisplay.API.Clients
         internal static TimetableModel.Alert[] ToAlerts(this Alert[] alerts)
             => alerts.Select(
                 a => new TimetableModel.Alert {
+                    Id = a.Id,
                     Line = new TimetableModel.Line {
                         Id = a.Route.ShortName,
                         Name = a.Route.LongName

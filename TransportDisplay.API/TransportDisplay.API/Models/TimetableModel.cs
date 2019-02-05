@@ -52,6 +52,7 @@ namespace TransportDisplay.API.Models
 
         public class Alert
         {
+            public string Id { get; set; }
             public Line Line { get; set; }
             public string AlertText { get; set; }
             public DateTimeOffset From { get; set; }

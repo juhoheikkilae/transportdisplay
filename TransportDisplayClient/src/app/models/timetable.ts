@@ -30,6 +30,7 @@ export class ArrivalEstimate {
 }
 
 export class Alert {
+  id: string;
   line: Line;
   alertText: string;
   from: Date;

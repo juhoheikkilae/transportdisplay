@@ -20,8 +20,15 @@ namespace TransportDisplay.API.Services
             _timetableClient = timetableClient;
         }
 
-        public async Task<TimetableModel.Alert[]> FetchCurrentAlertsAsync(CancellationToken cancellationToken)
-            => await _timetableClient.GetCurrentAlertsAsync(cancellationToken);
+        public async Task<TimetableModel.Alert[]> FetchCurrentAlertsAsync(CancellationToken cancellationToken) {
+            var alerts = await _timetableClient.GetCurrentAlertsAsync(cancellationToken);
+            foreach (var alert in alerts) {
+                if (!cancellationToken.IsCancellationRequested) {
+                    await BroadcastAlert(alert, cancellationToken);
+                }
+            }
+            return alerts;
+        }
 
         public async Task BroadcastAlert(TimetableModel.Alert alert, CancellationToken cancellationToken)
         {
